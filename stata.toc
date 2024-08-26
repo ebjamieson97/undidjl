@@ -1,1 +1,2 @@
-undidjl.ado
+v 3
+p undidjl Stata wrapper for Undid.jl
