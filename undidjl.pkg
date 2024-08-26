@@ -1,0 +1,14 @@
+.*! package undidjl 0.0.0 26aug2024
+TITLE
+    Unpooled difference-in-differences.
+DESCRIPTION
+    Wrapper for Undid.jl. 
+AUTHOR
+    Eric Jamieson
+    ericjamieson@cmail.carleton.ca
+INSTALLATION FILES
+    undidjl.ado
+    undidjl.toc
+VERSION
+    0.0.0
+    26aug2024
