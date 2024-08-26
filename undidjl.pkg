@@ -1,14 +1,20 @@
-.*! package undidjl 0.0.0 26aug2024
-TITLE
-    Unpooled difference-in-differences.
-DESCRIPTION
-    Wrapper for Undid.jl. 
-AUTHOR
-    Eric Jamieson
-    ericjamieson@cmail.carleton.ca
-INSTALLATION FILES
-    undidjl.ado
-    undidjl.toc
-VERSION
-    0.0.0
-    26aug2024
+d 'UNDIDJL': Stata wrapper for Undid.jl
+d 
+d Undidjl is a Stata wrapper for Undid.jl which itself is a package that allows for estimation 
+d of difference-in-differences with unpoolable data.
+d
+d
+d KW: undid
+d KW: unpoolable data
+d KW: difference in differences
+d
+d
+d Requires Stata version 18
+d 
+d
+d Author: Eric Jamieson
+d Support: ericjamieson@cmail.carleton.ca
+d 
+d
+f undidjl.ado
+f undidjl.toc
