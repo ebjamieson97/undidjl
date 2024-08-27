@@ -15,7 +15,7 @@ cap program drop checkundidversion
 program define checkundidversion, rclass
 	// Check that Undid for Julia is installed
 	jl: using Pkg
-	jl: if (Base.find_package("Undid") === nothing) == true 		///
+	jl: if Base.find_package("Undid") === nothing 				///
 			SF_display("Undid.jl not installed, installing now.");  ///
 			Pkg.add(url="https://github.com/ebjamieson97/undidjl"); ///
 			SF_display("Undid.jl is done installing.");             ///
