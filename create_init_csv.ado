@@ -76,10 +76,9 @@ program define create_init_csv
 	}
 	
 	// Return the filepath to Stata
-	qui jl: replace(filepath, "\\" => "/")
-	qui jl: st_global("filepath", filepath)
+	qui jl: st_global("filepath", filepath)	
 	disp as result "init.csv saved to"
-    	disp as result "$filepath"
+   	disp as result subinstr("$filepath", "\", "/", .)
 	
 end 
 
