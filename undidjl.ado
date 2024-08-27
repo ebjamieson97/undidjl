@@ -11,8 +11,8 @@ if _rc {
     di as error "The 'julia' package is required but not installed or not found in the system path. See https://github.com/droodman/julia.ado for more details."
     exit 198
 }
-cap program drop checkundidversion
-program define checkundidversion, rclass
+cap program drop undidjl
+program define undidjl, rclass
 	// Check that Undid for Julia is installed
 	jl: using Pkg
 	jl: if (Base.find_package("Undid") === nothing) == true 		///
