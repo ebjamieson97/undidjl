@@ -31,6 +31,7 @@ It is recommended to simply call create_init_csv and then fill out the informati
 {phang2}init.csv saved to C:\Users\User\Documents\Project Files\init.csv
 
 {phang2}{cmd:create_init_csv}
+
 {phang2}init.csv saved to C:\Users\User\Documents\Project Files\init.csv
 
 {title:Author}
