@@ -8,9 +8,6 @@
 {pstd}
 undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
 
-{phang}
-{cmd:checkundidversion}
-
 {title:Command Description}
 
 {phang}
@@ -20,10 +17,7 @@ undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
 
 {phang2}{cmd:. checkundidversion}
 
-{phang2}Currently installed version of Undid.jl is:
-{phang2}0.1.2
-{phang2}Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to
-{phang2}see latest version number.
+{phang2}Currently installed version of Undid.jl is: 0.1.2 Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to see latest version number.
 
 {title:Author}
 
