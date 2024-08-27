@@ -1,7 +1,7 @@
 /*------------------------------------*/
-/*undidjl*/
+/*checkundidversion*/
 /*written by Eric Jamieson */
-/*version 0.0.2 2024-08-27 */
+/*version 0.0.3 2024-08-27 */
 /*------------------------------------*/
 version 14.1
 
@@ -19,7 +19,7 @@ program define checkundidversion, rclass
 	jl: using Pkg
 	jl: if Base.find_package("Undid") === nothing 				///
 			SF_display("Undid.jl not installed, installing now.");  ///
-			Pkg.add(url="https://github.com/ebjamieson97/undidjl"); ///
+			Pkg.add(url="https://github.com/ebjamieson97/Undid.jl"); ///
 			SF_display("Undid.jl is done installing.");             ///
 		end										         			
 
@@ -32,4 +32,8 @@ program define checkundidversion, rclass
 	jl: SF_display("Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to see latest version number.")
 	
 end
-	
+
+/*--------------------------------------*/
+/* Change Log */
+/*--------------------------------------*/
+*0.0.3 - fixed Pkg.add url and set version to 14.1
