@@ -9,8 +9,8 @@ d KW: unpoolable data
 d KW: difference in differences
 d
 d
-d Requires Stata version 18
-d 
+d Requires: Stata 14.1 or later
+d Requires: Julia 1.9.4 or later
 d
 d Author: Eric Jamieson
 d Support: ericjamieson@cmail.carleton.ca
