@@ -37,16 +37,6 @@ There are no options for the {cmd:checkundidversion} command.
 {phang2}
 This command will display the currently installed version of the Undid.jl package, or install it if it is not yet installed.
 
-{title:Stored results}
-
-{pstd}
-{cmd:checkundidversion} stores the following in {cmd:r()}:
-
-{synoptset 20 tabbed}
-{synopthdr}
-{synoptline}
-{synopt:{cmd:r(undidjl_version)}}The current version of the Undid.jl package installed.{p_end}
-
 {title:Author}
 
 {pstd}
