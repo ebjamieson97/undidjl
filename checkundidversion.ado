@@ -1,9 +1,9 @@
 /*------------------------------------*/
 /*undidjl*/
 /*written by Eric Jamieson */
-/*version 0.0.1 2024-08-26 */
+/*version 0.0.2 2024-08-27 */
 /*------------------------------------*/
-version 18
+version 14.1
 
 cap program drop checkundidversion
 program define checkundidversion, rclass
