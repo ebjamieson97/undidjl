@@ -6,7 +6,7 @@
 version 14.1
 
 cap program drop checkundidversion
-program define checkundidversion, rclass
+program define checkundidversion
 
 	// Check that David Roodman's Julia package for Stata is installed
 	cap which jl
@@ -27,9 +27,9 @@ program define checkundidversion, rclass
 	qui jl: deps = Pkg.dependencies()
 	qui jl: package_version = deps[Base.UUID("b4918ae7-7c73-4176-80be-8405760cf2ee")].version
 	qui jl: current_Undid_version = string(package_version)
-	jl: SF_display("Currently installed version of Undid.jl is:")
-	jl: SF_display(current_Undid_version)
-	jl: SF_display("Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to see latest version number.")
+	qui jl: st_global("current_Undid_version", current_Undid_version)
+	disp as result "Currently installed version of Undid.jl is: $current_Undid_version")
+	disp as result "Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to see latest version number."
 	
 end
 
@@ -37,3 +37,4 @@ end
 /* Change Log */
 /*--------------------------------------*/
 *0.0.3 - fixed Pkg.add url and set version to 14.1
+*0.0.4 - changed results to disp as result 
