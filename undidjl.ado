@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl*/
 /*written by Eric Jamieson */
-/*version 0.0.0 2024-08-26 */
+/*version 0.0.1 2024-08-26 */
 /*------------------------------------*/
 version 18
 
@@ -23,9 +23,9 @@ program define checkundidversion, rclass
 
 
 	// Report the currently installed version of Undid.jl
-	jl: deps = Pkg.dependencies()
-	jl: package_version = deps[Base.UUID("b4918ae7-7c73-4176-80be-8405760cf2ee")].version
-	jl: current_Undid_version = string(package_version)
+	qui jl: deps = Pkg.dependencies()
+	qui jl: package_version = deps[Base.UUID("b4918ae7-7c73-4176-80be-8405760cf2ee")].version
+	qui jl: current_Undid_version = string(package_version)
 	jl: SF_display("Currently installed version of Undid.jl is:")
 	jl: SF_display(current_Undid_version)
 	jl: SF_display("Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml for latest version number.")
