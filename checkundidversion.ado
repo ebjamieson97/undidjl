@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*checkundidversion*/
 /*written by Eric Jamieson */
-/*version 0.0.4 2024-08-27 */
+/*version 0.1.0 2024-08-27 */
 /*------------------------------------*/
 version 14.1
 
@@ -37,4 +37,4 @@ end
 /* Change Log */
 /*--------------------------------------*/
 *0.0.3 - fixed Pkg.add url and set version to 14.1
-*0.0.4 - changed results to disp as result 
+*0.1.0 - changed results to disp as result 
