@@ -29,8 +29,7 @@ program define checkundidversion, rclass
 	qui jl: current_Undid_version = string(package_version)
 	jl: SF_display("Currently installed version of Undid.jl is:")
 	jl: SF_display(current_Undid_version)
-	jl: SF_display("Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml for latest version number and call:")
-	jl: println("jl: using Pkg; Pkg.add(url=\"https://github.com/ebjamieson97/Undid.jl\")"
+	jl: SF_display("Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to see latest version number.")
 	
 end
 	
