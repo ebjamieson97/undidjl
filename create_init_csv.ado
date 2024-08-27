@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_init_csv*/
 /*written by Eric Jamieson */
-/*version 0.1.0 2024-08-27 */
+/*version 0.1.1 2024-08-27 */
 /*------------------------------------*/
 version 14.1
 
@@ -76,8 +76,14 @@ program define create_init_csv
 	}
 	
 	// Return the filepath to Stata
+	qui jl: replace(filepath, "\\" => "/")
 	qui jl: st_global("filepath", filepath)
 	disp as result "init.csv saved to"
-    disp as result "$filepath"
+    	disp as result "$filepath"
 	
 end 
+
+/*--------------------------------------*/
+/* Change Log */
+/*--------------------------------------*/
+*0.1.1 - changed filepath format to work well in both Julia and Stata
