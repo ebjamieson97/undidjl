@@ -20,10 +20,15 @@ undidjl - Stata wrapper for the Undid.jl Julia package{p_end}
 
 {pstd}Check the version of Undid.jl:
 
-{phang2}{cmd:checkundidversion}
+{phang2}{cmd:. checkundidversion}
 
 {phang2}
-This command will display the currently installed version of the Undid.jl package, or install it if it is not yet installed.
+
+Currently installed version of Undid.jl is:
+0.1.2
+Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to
+see latest version number.
+
 
 {title:Author}
 
