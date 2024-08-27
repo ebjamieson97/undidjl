@@ -30,4 +30,4 @@ For more information about Undid.jl, visit the {browse "https://github.com/ebjam
 {title:Citation}
 
 {pstd}
-{cmd:undidjl} is not an official Stata command. It is a free contribution to the research community.{p_end}
+Ipsum lorem dolor.{p_end}
