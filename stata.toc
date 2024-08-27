@@ -1,2 +1,3 @@
 v 3
 p undidjl Stata wrapper for Undid.jl
+p checkundidversion Check the version of the Undid.jl package
