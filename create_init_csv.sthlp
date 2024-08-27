@@ -45,4 +45,4 @@ For more information about Undid.jl, visit the {browse "https://github.com/ebjam
 {title:Citation}
 
 {pstd}
-Ipsum lorem dolor.{p_end}
+Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data.{p_end}
