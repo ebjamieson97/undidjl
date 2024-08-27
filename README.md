@@ -1,5 +1,5 @@
 # undidjl
-This package acts as a wrapper for the Julia package Undid.jl. It contains several commands:
+This Stata package acts as a wrapper for the Julia package Undid.jl. It contains several commands:
 1. checkundidversion
 2. create_init_csv
 3. create_diff_df
