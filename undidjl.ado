@@ -10,9 +10,7 @@ cap which jl
 if _rc {
     di as error "The 'julia' package is required but not installed or not found in the system path. See https://github.com/droodman/julia.ado for more details."
     exit 198
-} else {
-    di as result "julia is installed."
-}
+} 
 cap program drop checkundidversion
 program define checkundidversion, rclass
 	// Check that Undid for Julia is installed
