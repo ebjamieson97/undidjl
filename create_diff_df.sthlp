@@ -12,6 +12,7 @@ undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
 
 {phang}
 {cmd:create_diff_df} creates the empty_diff_df.csv file which is to be sent to the seperate silos to be filled out. 
+
 The required arguments are: the filepath to the init.csv which should be inputed as a string with forward slashes; the date_format which should be inputed as a string 
 such as ["yyyy/mm/dd", "yyyy-mm-dd", "yyyymmdd", "yyyy/dd/mm", "yyyy-dd-mm", "yyyyddmm", "dd/mm/yyyy", "dd-mm-yyyy", "ddmmyyyy", "mm/dd/yyyy", 
 "mm-dd-yyyy", "mmddyyyy", "mm/yyyy", "mm-yyyy", "mmyyyy", "yyyy", "ddmonyyyy", "yyyym00"] and accurately reflect the format of the dates stored in init.csv; the freq of data
