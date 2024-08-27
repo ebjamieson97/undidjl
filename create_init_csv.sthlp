@@ -28,11 +28,11 @@ It is recommended to simply call create_init_csv and then fill out the informati
 
 {phang2}{cmd:create_init_csv, silo_names("71 73 58 46") start_times("1989 1989 1989 1989") end_times ("2000 2000 2000 2000") treatment_times("1991 control 1993 control") covariates("asian black male")}
 
-{phang2}init.csv saved to C:\Users\User\Documents\Project Files\init.csv
+{phang2}init.csv saved to C:/Users/User/Documents/Project Files/init.csv
 
 {phang2}{cmd:create_init_csv}
 
-{phang2}init.csv saved to C:\Users\User\Documents\Project Files\init.csv
+{phang2}init.csv saved to C:/Users/User/Documents/Project Files/init.csv
 
 {title:Author}
 
