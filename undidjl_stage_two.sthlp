@@ -28,7 +28,7 @@ in a single string with the corresponding new names for the columns. Any covaria
 
 {title:Examples}
 
-{phang2}{undidjl_stage_two, filepath("C:/Users/User/Documents/Project Files/empty_diff_df.csv") local_silo_name("71") time_column("date_str") outcome_column("coll") local_date_format("ddmonyyyy")}
+{phang2}{cmd:undidjl_stage_two, filepath("C:/Users/User/Documents/Project Files/empty_diff_df.csv") local_silo_name("71") time_column("date_str") outcome_column("coll") local_date_format("ddmonyyyy")}
 
 {phang2}filled_diff_df_71.csv saved to C:/Users/User/Documents/Project Files/filled_diff_df_71.csv 
 
