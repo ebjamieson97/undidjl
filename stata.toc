@@ -1,6 +1,7 @@
 v 3
 p undidjl Stata wrapper for Undid.jl
 p checkundidversion Check the version of the Undid.jl package
+p updateundid Uninstalls Undid.jl and re-installs the latest version
 p create_init_csv Creates the init.csv
 p create_diff_df Creates the empty_diff_df.csv
 p undidjl_stage_two Runs undid stage two procedures
