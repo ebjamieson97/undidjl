@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.1.0 27aug2024}
+{* *! version 0.1.1 29aug2024}
 {help undidjl_stage_two:undidjl_stage_two}
 {hline}
 
@@ -19,12 +19,13 @@ and finally, the local_date_format(string) of the date/time data in the active d
 "yyyyddmm", "dd/mm/yyyy", "dd-mm-yyyy", "ddmmyyyy", "mm/dd/yyyy", "mm-dd-yyyy", "mmddyyyy", "mm/yyyy", "mm-yyyy", "mmyyyy", "yyyy", "ddmonyyyy", "yyyym00"].
 
 Optional arguments (have not been added yet) are columns_to_rename(string) and rename_to(string). Columns should be listed as a single string with seperate column names seperated by a space. Likewise rename_to(string) takes 
-in a single string with the corresponding new names for the columns. Any covariates in the local silo should be renamed to match the covariates as they are named in the empty_diff_df.csv. 
+in a single string with the corresponding new names for the columns. Any covariates in the local silo should be renamed to match the covariates as they are named in the empty_diff_df.csv. Otherwise, it is also possible to 
+specify consider_covariates("false") as an optional argument which will then run stage two procedures while ignoring any calculations involving any covariates.
 
 {title:Syntax}
 
 {pstd}
-{cmd:undidjl_stage_two} filepath(string) local_silo_name(string) time_column(string) outcome_column(string) local_date_format(string) [{it:columns_to_rename(string)} {it:rename_to(string)}]{p_end}
+{cmd:undidjl_stage_two} filepath(string) local_silo_name(string) time_column(string) outcome_column(string) local_date_format(string) [{it:columns_to_rename(string)} {it:rename_to(string)} {it:consider_covariates(string)}]{p_end}
 
 {title:Examples}
 
