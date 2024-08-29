@@ -7,7 +7,7 @@ net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidj
 ```
 
 ### Utility Commands
-These commands provide general utilities for managing the Undid.jl package from Stata:
+These commands allow for managing the Undid.jl package from Stata:
 
 1. **checkundidversion**: Checks the current version of Undid.jl.
 2. **updateundid**: Updates Undid.jl to the latest version.
