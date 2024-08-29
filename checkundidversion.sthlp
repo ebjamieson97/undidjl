@@ -1,33 +1,59 @@
-{smcl}
-{* *! version 0.1.1 27aug2024}
-{help checkundidversion:checkundidversion}
-{hline}
+/*------------------------------------*/
+/*checkundidversion*/
+/*written by Eric Jamieson */
+/*version 0.1.2 2024-08-27 */
+/*------------------------------------*/
+version 14.1
 
-{title:undidjl}
+cap program drop checkundidversion
+program define checkundidversion
 
-{pstd}
-undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
+	// Check that David Roodman's Julia package for Stata is installed
+	cap which jl
+	if _rc {
+    	di as error "The 'julia' package is required but not installed or not found in the system path. See https://github.com/droodman/julia.ado for more details."
+    	exit 198
+	} 
+	
+	// Check that Undid for Julia is installed
+	jl: using Pkg
+	jl: if Base.find_package("Undid") === nothing 				///
+			SF_display("Undid.jl not installed, installing now.");  ///
+			Pkg.add(url="https://github.com/ebjamieson97/Undid.jl"); ///
+			SF_display("Undid.jl is done installing.");             ///
+		end										         			
 
-{title:Command Description}
+	// Report the currently installed version of Undid.jl
+	qui jl: deps = Pkg.dependencies()
+	qui jl: package_version = deps[Base.UUID("b4918ae7-7c73-4176-80be-8405760cf2ee")].version
+	qui jl: current_Undid_version = string(package_version)
+	qui jl: st_global("current_Undid_version", current_Undid_version)
+	disp as result "Currently installed version of Undid.jl is: $current_Undid_version"
 
-{phang}
-{cmd:checkundidversion} checks if the Undid.jl Julia package is installed and reports the currently installed version. If it is not installed, the command installs the most recent version from {browse "https://github.com/ebjamieson97/Undid.jl"}.
+	qui jl: using Downloads
+	qui jl: url = "https://raw.githubusercontent.com/ebjamieson97/Undid.jl/main/Project.toml"
+	qui jl: try ///
+		content = Downloads.download(url); ///
+		file_content = read(content, String); ///
+		start_pos = findfirst("version = ", file_content); ///
+		start = start_pos[end]; /// 
+		newest_version = file_content[start+2:start+8]; ///
+		st_global("newest_version", newest_version); ///
+	catch e ///
+		println("An error occurred: ", e); ///
+		st_global("newest_version", "Unable to fetch latest version of Undid.jl. Please check your internet connection and try again."); ///
+	end 
+	
+	disp as result "Latest version of Undid.jl is: $newest_version"
+	disp as result "Consider running command updateundid if installed version is out of date."
 
-{title:Examples}
+	
+end
 
-{phang2}{cmd:checkundidversion}
-
-{phang2}Currently installed version of Undid.jl is: 0.1.2 Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to see latest version number.
-
-{title:Author}
-
-{pstd}
-Eric Jamieson{p_end}
-
-{pstd}
-For more information about Undid.jl, visit the {browse "https://github.com/ebjamieson97/undidjl"} GitHub repository.{p_end}
-
-{title:Citation}
-
-{pstd}
-Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data. {p_end}
+/*--------------------------------------*/
+/* Change Log */
+/*--------------------------------------*/
+*0.0.3 - fixed Pkg.add url and set version to 14.1
+*0.1.0 - changed results to disp as result 
+*0.1.1 - added script to get latest version of Undid.jl from the associated .toml file
+*0.1.2 - fixed indexing from start+6 to start+8
