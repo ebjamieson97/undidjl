@@ -5,6 +5,10 @@ This Stata package acts as a wrapper for the Julia package Undid.jl.
 ```
 net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidjl/main/")
 ```
+## Requirements
+* Julia 1.9.4 or later
+* Stata 14.1 or later
+* the julia package for Stata, see https://github.com/droodman/julia.ado
 
 ### Utility Commands
 These commands allow for managing the Undid.jl package for Julia from Stata:
