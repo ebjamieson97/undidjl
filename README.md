@@ -6,6 +6,8 @@ This Stata package acts as a wrapper for the Julia package Undid.jl.
 net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidjl/main/")
 ```
 
+![Diagram showing how difference-in-differences is computed with unpoolable data](./undid_schematic.png)
+
 ### Utility Commands
 These commands allow for managing the Undid.jl package from Stata:
 
