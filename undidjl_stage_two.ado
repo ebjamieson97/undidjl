@@ -1,14 +1,14 @@
 /*------------------------------------*/
 /*undidjl_stage_two*/
 /*written by Eric Jamieson */
-/*version 0.1.0 2024-08-27 */
+/*version 0.1.1 2024-08-27 */
 /*------------------------------------*/
 version 14.1
 
 cap program drop undidjl_stage_two
 program define undidjl_stage_two
 
-	syntax , filepath(string) local_silo_name(string) time_column(string) outcome_column(string) local_date_format(string) [columns_to_rename(string) rename_to(string)]
+	syntax , filepath(string) local_silo_name(string) time_column(string) outcome_column(string) local_date_format(string) [columns_to_rename(string) rename_to(string) consider_covariates(string)]
 	
 	// Declare usage of Undid and start up Julia
 	jl: using Undid
@@ -20,9 +20,22 @@ program define undidjl_stage_two
 	global outcome_column = "`outcome_column'"
 	global local_date_format = "`local_date_format'"
 	
+		// Parse consider_covariates
+	if "`consider_covariates'" == "" | "`consider_covariates'" == "TRUE" | "`consider_covariates'" == "true" | "`consider_covariates'" == "T" | "`consider_covariates'" == "True" {
+		qui jl: consider_covariates = true
+	}
+	else if  "`consider_covariates'" == "FALSE" | "`consider_covariates'" == "false" | "`consider_covariates'" == "F" | "`consider_covariates'" == "False" {
+		qui jl: consider_covariates = false
+	}
+	else { 
+		display as error "Error: set consider_covariates to true or false or omit the argument (defaults to true)."
+	}
+	
+	
+	
 	qui jl save df
 	
-	qui jl: filepaths = run_stage_two("$filepath", "$local_silo_name", df, "$time_column", "$outcome_column","$local_date_format", return_filepath = true)
+	jl: filepaths = run_stage_two("$filepath", "$local_silo_name", df, "$time_column", "$outcome_column","$local_date_format", return_filepath = true, consider_covariates = consider_covariates)
 	
 	qui jl: st_global("filepath_diff", filepaths[1])
 	qui jl: st_global("filepath_trends", filepaths[2])	
@@ -32,3 +45,9 @@ program define undidjl_stage_two
    	disp as result subinstr("$filepath_trends", "\", "/", .)
 
 end 
+
+
+/*--------------------------------------*/
+/* Change Log */
+/*--------------------------------------*/
+*0.1.1 - added option to ignore covariates specified from stage one
