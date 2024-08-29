@@ -26,3 +26,5 @@ f create_diff_df.ado
 f create_diff_df.sthlp 
 f undidjl_stage_two.ado
 f undidjl_stage_two.sthlp 
+f undidjl_stage_three.ado
+f undidjl_stage_three.sthlp 
