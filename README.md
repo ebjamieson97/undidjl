@@ -1,5 +1,10 @@
 # undidjl
-This Stata package acts as a wrapper for the Julia package Undid.jl. It contains several commands:
+This Stata package acts as a wrapper for the Julia package Undid.jl.
+
+## Installation 
+```
+net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidjl/main/")
+```
 
 ### Utility Commands
 These commands provide general utilities for managing the Undid.jl package from Stata:
@@ -24,7 +29,3 @@ These commands are used during the third and final stage of undid:
 6. **undidjl_stage_three**: Executes the third stage of undid.
 7. **plot_parallel_trends**: Plots the parallel trends figures.
 
-## Installation 
-```
-net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidjl/main/")
-```
