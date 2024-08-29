@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*checkundidversion*/
 /*written by Eric Jamieson */
-/*version 0.1.1 2024-08-27 */
+/*version 0.1.2 2024-08-29 */
 /*------------------------------------*/
 version 14.1
 
@@ -37,7 +37,7 @@ program define checkundidversion
 		file_content = read(content, String); ///
 		start_pos = findfirst("version = ", file_content); ///
 		start = start_pos[end]; /// 
-		newest_version = file_content[start+2:start+6]; ///
+		newest_version = file_content[start+2:start+8]; ///
 		st_global("newest_version", newest_version); ///
 	catch e ///
 		println("An error occurred: ", e); ///
@@ -45,7 +45,7 @@ program define checkundidversion
 	end 
 	
 	disp as result "Latest version of Undid.jl is: $newest_version"
-	disp as result "Consider running command updateundid if installed version it out of date."
+	disp as result "Consider running command updateundid if installed version is out of date."
 
 	
 end
@@ -56,3 +56,4 @@ end
 *0.0.3 - fixed Pkg.add url and set version to 14.1
 *0.1.0 - changed results to disp as result 
 *0.1.1 - added script to get latest version of Undid.jl from the associated .toml file
+*0.1.2 - fixed indexing from start+6 to start+8
