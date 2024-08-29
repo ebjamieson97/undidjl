@@ -21,7 +21,7 @@ These commands are used during the first stage of the undid process:
 ## Stage Two Command
 This command is used during the second stage of the undid process at each silo:
 
-5. **undidjl_state_two**: Grabs information from the empty_diff_df.csv and the local silo data to fill out that silo's portion of the empty_diff_df.csv which is then saved as filled_diff_df_$local_silo_name.csv. Also computes and trends data of the outcome of interest which is saved as trends_data_$local_silo_name.csv.
+5. **undidjl_state_two**: Grabs information from the empty_diff_df.csv and the local silo data to fill out that silo's portion of the empty_diff_df.csv which is then saved as filled_diff_df_$local_silo_name.csv. Also computes trends data of the outcome of interest which is saved as trends_data_$local_silo_name.csv.
 
 ## Stage Three Commands
 These commands are used during the third and final stage of undid:
