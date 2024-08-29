@@ -29,4 +29,6 @@ These commands are used during the third and final stage of undid:
 6. **undidjl_stage_three**: Executes the third stage of undid.
 7. **plot_parallel_trends**: Plots the parallel trends figures.
 
+
+### Undid Schematic 
 ![Diagram showing how difference-in-differences is computed with unpoolable data](./undid_schematic.png)
