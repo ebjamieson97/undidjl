@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*checkundidversion*/
 /*written by Eric Jamieson */
-/*version 0.1.0 2024-08-27 */
+/*version 0.1.1 2024-08-27 */
 /*------------------------------------*/
 version 14.1
 
@@ -29,7 +29,24 @@ program define checkundidversion
 	qui jl: current_Undid_version = string(package_version)
 	qui jl: st_global("current_Undid_version", current_Undid_version)
 	disp as result "Currently installed version of Undid.jl is: $current_Undid_version"
-	disp as result "Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to see latest version number."
+
+	qui jl: using Downloads
+	qui jl: url = "https://raw.githubusercontent.com/ebjamieson97/Undid.jl/main/Project.toml"
+	qui jl: try ///
+		content = Downloads.download(url); ///
+		file_content = read(content, String); ///
+		start_pos = findfirst("version = ", file_content); ///
+		start = start_pos[end]; /// 
+		newest_version = file_content[start+2:start+6]; ///
+		st_global("newest_version", newest_version); ///
+	catch e ///
+		println("An error occurred: ", e); ///
+		st_global("newest_version", "Unable to fetch latest version of Undid.jl. Please check your internet connection and try again."); ///
+	end 
+	
+	disp as result "Latest version of Undid.jl is: $newest_version"
+	disp as result "Consider running command updateundid if installed version it out of date."
+
 	
 end
 
@@ -38,3 +55,4 @@ end
 /*--------------------------------------*/
 *0.0.3 - fixed Pkg.add url and set version to 14.1
 *0.1.0 - changed results to disp as result 
+*0.1.1 - added script to get latest version of Undid.jl from the associated .toml file
