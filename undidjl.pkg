@@ -28,3 +28,5 @@ f undidjl_stage_two.ado
 f undidjl_stage_two.sthlp 
 f undidjl_stage_three.ado
 f undidjl_stage_three.sthlp 
+f plot_parallel_trends.ado
+f plot_parallel_trends.sthlp 
