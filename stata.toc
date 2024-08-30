@@ -6,3 +6,4 @@ p create_init_csv Creates the init.csv
 p create_diff_df Creates the empty_diff_df.csv
 p undidjl_stage_two Runs undid stage two procedures
 p undidjl_stage_three Calculates aggregate ATT
+p plot_parallel_trends Plots parallel trends figures
