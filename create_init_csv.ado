@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_init_csv*/
 /*written by Eric Jamieson */
-/*version 0.1.1 2024-08-27 */
+/*version 0.1.2 2024-09-04 */
 /*------------------------------------*/
 version 14.1
 
@@ -76,9 +76,13 @@ program define create_init_csv
 	}
 	
 	// Return the filepath to Stata
+	qui jl: init_df = string.(read_csv_data(filepath))
 	qui jl: st_global("filepath", filepath)	
 	disp as result "init.csv saved to"
    	disp as result subinstr("$filepath", "\", "/", .)
+	
+	jl use init_df, clear
+
 	
 end 
 
@@ -86,3 +90,4 @@ end
 /* Change Log */
 /*--------------------------------------*/
 *0.1.1 - changed filepath format to work well in both Julia and Stata
+*0.1.2 - pass df to active Stata dataset for easy viewing
