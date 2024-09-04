@@ -16,14 +16,6 @@ net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidj
 These commands allow for managing the Undid.jl package for Julia from Stata:
 
 1. **checkundidversion**: Displays the currently installed Undid.jl version number and the latest Undid.jl version number. Installs the latest version of Undid.jl if no version of Undid.jl is currently installed.
-```stata
-. checkundidversion
-
-
-Currently installed version of Undid.jl is: 0.1.10
-Latest version of Undid.jl is: 0.1.10
-Consider running command updateundid if installed version is out of date.
-```
 2. **updateundid**: Updates Undid.jl to the latest version if Undid.jl is already installed.
 
 
