@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*plot_parallel_trends*/
 /*written by Eric Jamieson */
-/*version 0.0.1 2024-09-03 */
+/*version 0.1.0 2024-09-04 */
 /*------------------------------------*/
 version 14.1
 
@@ -14,7 +14,10 @@ version 14.1
 cap program drop plot_parallel_trends
 program define plot_parallel_trends
 
-	syntax , folder(string) outcome_variable(string) [silos(string) save_csv(string) covariates(string) save_image(string) omit_silos(string) date_format(string)]
+	syntax , folder(string) outcome_variable(string) ///
+	[silos(string) save_csv(string) covariates(string) ///
+	omit_silos(string) date_format(string) ///
+	combine(string) step(numlist int max=1)]
 
 	jl: using Undid
 	
@@ -99,22 +102,85 @@ program define plot_parallel_trends
 		disp as error "To plot the mean_outcome set covariates to false. To plot the mean outcome residualized by covariates, set covariates to true."
 	}
 	
+	// If combine is set to true then combine the treatment groups together
+	// and combine the control groups together
+	if "`combine'" == "TRUE" | "`combine'" == "true" | "`combine'" == "T" | "`combine'" == "True" {
+		qui jl: using Statistics
+		qui jl: using DataFrames
+		qui jl: time_vec = []
+		qui jl: y_vec = []
+		qui jl: silo_name_vec = []
+		qui jl: treatment_times_vec = []
+		qui jl: for date in unique(trends_data.time) ///
+				push!(time_vec, date); ///
+				push!(silo_name_vec, "Treatment"); ///
+				push!(y_vec, mean(trends_data[(trends_data.time .== date) .&& (trends_data.treatment_time .!= "control"), "y"])); ///	
+				push!(time_vec, date); ///
+				push!(silo_name_vec, "Control"); ///
+				push!(y_vec, mean(trends_data[(trends_data.time .== date) .&& (trends_data.treatment_time .== "control"), "y"])); ///
+				if nrow(trends_data[trends_data.treatment_time .== date,:]) > 0 ///
+					push!(treatment_times_vec, trends_data[trends_data.treatment_time .== date, "treatment_time"][1]); ///
+					push!(treatment_times_vec, trends_data[trends_data.treatment_time .== date, "treatment_time"][1]); ///
+				else /// 
+					push!(treatment_times_vec, "no"); ///
+					push!(treatment_times_vec, "no"); ///
+				end /// 
+				end 
+		qui jl: trends_data = DataFrame(silo_name = silo_name_vec, time = time_vec, y = y_vec, treatment_time = treatment_times_vec)
+		qui jl: trends_data.y = Float64.(trends_data.y)
+		qui jl: trends_data.time = string.(trends_data.time)
+		qui jl: trends_data.silo_name = string.(trends_data.silo_name)
+		qui jl: trends_data.treatment_time = string.(trends_data.treatment_time)
+	}
+	else if "`combine'" == "" | "`combine'" == "FALSE" | "`combine'" == "false" | "`combine'" == "F" | "`combine'" == "False" {
+		qui jl: trends_data.treatment_time = replace.(trends_data.treatment_time, "control" => "no")
+	}
+	else {
+		di as error "Please set combine to true or false."
+	}
+	
+	
 	// Load the Julia dataframe into Stata
 	jl use trends_data, clear
 	
-	// Plot
-	gen date = date(time, "YMD")
-	format date %td
-	encode silo_name, gen(silo_id)
-	xtset silo_id date
-	xtline y, overlay ///
-    title("$outcome_variable$resid by Silo") ///
-    ytitle("Average $outcome_variable$resid") ///
-	xtitle("") ///
-    xlabel(, format($date_format) labsize(small)) /// 
-	ylabel(, labsize(small))
+	// Create labels for plot
+	qui gen date = date(time, "YMD")
+	qui format date %td
+    qui sort date
+    qui preserve
+    qui keep date
+    qui duplicates drop
+    qui list date
+    qui if "`step'" == "" {
+        local step 1
+    }
+    qui local labels
+    qui {
+        forvalues i = 1(`step')`=_N' {
+            local labels `labels' `=date[`i']'
+        }
+    }
+    qui restore
+	
+	// Identify unique treatment times
+	qui levelsof treatment_time if treatment_time != "no", local(treatment_dates)
+	qui local treatment_xlines
+	qui foreach t in `treatment_dates' {
+		local treatment_xlines `treatment_xlines' `=date("`t'", "YMD")'
+	}
 	
 
+	// Plot
+	qui encode silo_name, gen(silo_id)
+	qui xtset silo_id date
+	qui xtline y, overlay ///
+    title("$outcome_variable$resid") ///
+    ytitle("Mean $outcome_variable$resid") ///
+	xtitle("") ///
+    xlabel(`labels', format($date_format) labsize(small)) /// 
+	ylabel(, labsize(small) nogrid) /// 
+	xline(`treatment_xlines', lpattern(dash) lcolor(gs13)) /// 
+	graphregion(color(white)) /// 
 
 end 
 
@@ -124,3 +190,4 @@ end
 /*--------------------------------------*/
 *0.0.0 - initialized
 *0.0.1 - working as a beta version
+*0.1.0 - added ability to combine groups by treatment status and dashed lines to mark treatment times
