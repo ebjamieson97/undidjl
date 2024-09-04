@@ -8,8 +8,8 @@ version 14.1
 
 // 1) no covariates, one treated line and one control line
 // 2) residualized by covariates, one treated line and one control line
-// 2) no covariates, one line per silo
-// 3) residualized by covariates, one line per silo
+// 3) no covariates, one line per silo
+// 4) residualized by covariates, one line per silo
 
 cap program drop plot_parallel_trends
 program define plot_parallel_trends
