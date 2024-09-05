@@ -23,6 +23,14 @@ These commands allow for managing the Undid.jl package for Julia from Stata:
 These commands are used during the first stage of the undid process:
 
 3. **create_init_csv**: Creates an initial .csv file (init.csv) specifying the silos, start times, end times, and treatment (or lack thereof) times.
+#### Example
+```stata
+create_init_csv, silo_names("71 73 58 46") start_times("1989 1989 1989 1989") end_times("2000 2000 2000 2000") treatment_times("1991 control 1993 control") covariates("asian black male")
+init.csv saved to
+C:/Users/Eric Bruce Jamieson/Documents/Dalhousie Work/init.csv
+```
+#### Details
+
 4. **create_diff_df**: Creates an empty .csv file (empty_diff_df.csv) using information from the init.csv specifying the required differences to be calculated at each silo.
 
 ## Stage Two: Silo
