@@ -28,13 +28,13 @@ These commands are used during the first stage of the undid process:
 ##### Examples
 ```stata
 create_init_csv, silo_names("71 73 58 46") start_times("1989 1989 1989 1989") end_times("2000 2000 2000 2000") treatment_times("1991 control 1993 control") covariates("asian black male")
-init.csv saved to
-C:/Users/User/Documents/Project Files/init.csv
+# init.csv saved to
+# C:/Users/User/Documents/Project Files/init.csv
 
 
 create_diff_df, filepath("C:/Users/User/Documents/Project Files/init.csv") date_format("yyyy") freq("yearly")
-empty_diff_df.csv saved to
-C:/Users/User/Documents/Project Files/empty_diff_df.csv
+# empty_diff_df.csv saved to
+# C:/Users/User/Documents/Project Files/empty_diff_df.csv
 ```
 ##### Details
 Calling `create_init_csv` will return the filepath where the created init.csv is saved and its contents will appear in the active Stata dataset. All of the options for `create_init_csv` are optional and thus `create_init_csv` can be called to create a blank init.csv file with only the appropriate headers which can then be filled out manually. Dates can be entered in a wide variety of formats shown [here](#valid-date-formats). Ensure that dates are consistently entered in the same format when creating the init.csv. Control silos should be marked with "control" in the treatment_times column (e.g. silos 73 & 46 in the above example). Covariates can either be specified when creating the init.csv or when calling `create_diff_df`.
