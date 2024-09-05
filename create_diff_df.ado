@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_diff_df*/
 /*written by Eric Jamieson */
-/*version 0.1.1 2024-09-05 */
+/*version 0.1.2 2024-09-05 */
 /*------------------------------------*/
 version 14.1
 
@@ -57,17 +57,17 @@ program define create_diff_df
 	}
 
 	
-	qui jl: ouputs = create_diff_df("$filepath", covariates = covariates, date_format = "$date_format", freq = "$freq", freq_multiplier = freq_multiplier, confine_matching = confine_matching)
+	qui jl: outputs = create_diff_df("$filepath", covariates = covariates, date_format = "$date_format", freq = "$freq", freq_multiplier = freq_multiplier, confine_matching = confine_matching)
 	qui jl: filepath = outputs[1]
 	qui jl: empty_diff_df = string.(outputs[2])
-	
-	jl use empty_diff_df, clear
-	
+	qui jl: rename!(empty_diff_df, Symbol("(g;t)") => :gt)
 
 	// Return the filepath to Stata
 	qui jl: st_global("filepath", filepath)	
 	disp as result "empty_diff_df.csv saved to"
    	disp as result subinstr("$filepath", "\", "/", .)
+	
+	jl use empty_diff_df, clear
 
 
 end
@@ -75,3 +75,4 @@ end
 /* Change Log */
 /*--------------------------------------*/
 *0.1.1 - now returns the df to active Stata dataset, as well as prints out empty_diff_df.csv filepath
+*0.1.2 - Stata can't handle (g;t) name for column so renamed to gt
