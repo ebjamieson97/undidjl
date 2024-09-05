@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_diff_df*/
 /*written by Eric Jamieson */
-/*version 0.1.0 2024-08-27 */
+/*version 0.1.1 2024-09-05 */
 /*------------------------------------*/
 version 14.1
 
@@ -57,11 +57,21 @@ program define create_diff_df
 	}
 
 	
-	jl: filepath = diff_df = create_diff_df("$filepath", covariates = covariates, date_format = "$date_format", freq = "$freq", freq_multiplier = freq_multiplier, confine_matching = confine_matching, return_filepath = true)
+	qui jl: ouputs = create_diff_df("$filepath", covariates = covariates, date_format = "$date_format", freq = "$freq", freq_multiplier = freq_multiplier, confine_matching = confine_matching)
+	qui jl: filepath = outputs[1]
+	qui jl: empty_diff_df = string.(outputs[2])
+	
+	jl use empty_diff_df, clear
+	
 
 	// Return the filepath to Stata
 	qui jl: st_global("filepath", filepath)	
 	disp as result "empty_diff_df.csv saved to"
    	disp as result subinstr("$filepath", "\", "/", .)
 
+
 end
+/*--------------------------------------*/
+/* Change Log */
+/*--------------------------------------*/
+*0.1.1 - now returns the df to active Stata dataset, as well as prints out empty_diff_df.csv filepath
