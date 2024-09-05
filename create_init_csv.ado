@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_init_csv*/
 /*written by Eric Jamieson */
-/*version 0.1.3 2024-09-05 */
+/*version 0.1.3 2024-09-04 */
 /*------------------------------------*/
 version 14.1
 
@@ -75,11 +75,11 @@ program define create_init_csv
 
 	}
 	
-	jl: filepath = create_init_csv(namesa, start_times, end_times, treatment_times, covariates = covariates)
+	qui jl: filepath = create_init_csv(namesa, start_times, end_times, treatment_times, covariates = covariates)
 
 	// Return the filepath to Stata
-	jl: init_df = string.(read_csv_data(filepath))
-	jl: st_global("filepath", filepath)	
+	qui jl: init_df = string.(read_csv_data(filepath))
+	qui jl: st_global("filepath", filepath)	
 	disp as result "init.csv saved to"
    	disp as result subinstr("$filepath", "\", "/", .)
 	
