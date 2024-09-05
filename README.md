@@ -46,6 +46,17 @@ This command is used during the second stage of the undid process at each silo:
 
 5. **undidjl_state_two**: Grabs information from the empty_diff_df.csv and the local silo data to fill out that silo's portion of the empty_diff_df.csv which is then saved as filled_diff_df_$local_silo_name.csv. Also computes trends data of the outcome of interest which is saved as trends_data_$local_silo_name.csv.
 
+##### Examples
+```stata
+use "C:\Users\User\Data\State73.dta", clear
+undidjl_stage_two, filepath("C:/Users/User/Documents/csvs/empty_diff_df.csv") local_silo_name("73") time_column("date_str") outcome_column("coll") local_date_format("ddmonyyyy") view_dataframe("trends")
+# filled_diff_df_73.csv saved to
+# C:/Users/User/Current Folder/filled_diff_df_73.csv
+# trends_data_73.csv saved to
+# C:/Users/User/Current Folder/trends_data_73.csv
+```
+##### Details
+
 ## Stage Three: Analysis
 These commands are used during the third and final stage of undid:
 
