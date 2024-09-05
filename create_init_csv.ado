@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_init_csv*/
 /*written by Eric Jamieson */
-/*version 0.1.3 2024-09-04 */
+/*version 0.1.4 2024-09-04 */
 /*------------------------------------*/
 version 14.1
 
@@ -84,6 +84,11 @@ program define create_init_csv
    	disp as result subinstr("$filepath", "\", "/", .)
 	
 	jl use init_df, clear
+	
+	qui jl: namesa = []
+	qui jl: start_times = []
+	qui jl: end_times = []
+	qui jl: treatment_times = []
 
 	
 end 
@@ -94,3 +99,4 @@ end
 *0.1.1 - changed filepath format to work well in both Julia and Stata
 *0.1.2 - pass df to active Stata dataset for easy viewing
 *0.1.3 - changed names variable to namesa to avoid conflict with DataFrames
+*0.1.4 - reset namesa, start_times, end_times, treatment_times at end of function
