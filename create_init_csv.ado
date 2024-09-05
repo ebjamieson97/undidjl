@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_init_csv*/
 /*written by Eric Jamieson */
-/*version 0.1.2 2024-09-04 */
+/*version 0.1.3 2024-09-05 */
 /*------------------------------------*/
 version 14.1
 
@@ -36,12 +36,12 @@ program define create_init_csv
 		qui jl: filepath = create_init_csv()
 	}
 	else {
-		qui jl: names = String[]
+		qui jl: namesa = String[]
 		local counter = 1
 		tokenize "`silo_names'"
 		while "`1'" != "" {
             global silo_names_to_julia "`1'"
-			qui jl: push!(names, "$silo_names_to_julia")
+			qui jl: push!(namesa, "$silo_names_to_julia")
 			local counter = `counter' + 1
 			macro shift
 		}
@@ -72,12 +72,14 @@ program define create_init_csv
 			local counter = `counter' + 1
 			macro shift
 		}
-		qui jl: filepath = create_init_csv(names, start_times, end_times, treatment_times, covariates = covariates)
+
 	}
 	
+	jl: filepath = create_init_csv(namesa, start_times, end_times, treatment_times, covariates = covariates)
+
 	// Return the filepath to Stata
-	qui jl: init_df = string.(read_csv_data(filepath))
-	qui jl: st_global("filepath", filepath)	
+	jl: init_df = string.(read_csv_data(filepath))
+	jl: st_global("filepath", filepath)	
 	disp as result "init.csv saved to"
    	disp as result subinstr("$filepath", "\", "/", .)
 	
@@ -91,3 +93,4 @@ end
 /*--------------------------------------*/
 *0.1.1 - changed filepath format to work well in both Julia and Stata
 *0.1.2 - pass df to active Stata dataset for easy viewing
+*0.1.3 - changed names variable to namesa to avoid conflict with DataFrames
