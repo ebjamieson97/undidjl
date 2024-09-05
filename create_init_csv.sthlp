@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.1.1 27aug2024}
+{* *! version 0.1.4 05sep2024}
 {help create_init_csv:create_init_csv}
 {hline}
 
