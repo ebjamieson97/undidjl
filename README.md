@@ -30,11 +30,16 @@ These commands are used during the first stage of the undid process:
 create_init_csv, silo_names("71 73 58 46") start_times("1989 1989 1989 1989") end_times("2000 2000 2000 2000") treatment_times("1991 control 1993 control") covariates("asian black male")
 init.csv saved to
 C:/Users/User/Documents/Project Files/init.csv
+
+
+create_diff_df, filepath("C:/Users/User/Documents/Project Files/init.csv") date_format("yyyy") freq("yearly")
+empty_diff_df.csv saved to
+C:/Users/User/Documents/Project Files/empty_diff_df.csv
 ```
 ##### Details
 Calling `create_init_csv` will return the filepath where the created init.csv is saved and its contents will appear in the active Stata dataset. All of the options for `create_init_csv` are optional and thus `create_init_csv` can be called to create a blank init.csv file with only the appropriate headers which can then be filled out manually. Dates can be entered in a wide variety of formats shown [here](#valid-date-formats). Ensure that dates are consistently entered in the same format when creating the init.csv. Control silos should be marked with "control" in the treatment_times column (e.g. silos 73 & 46 in the above example). Covariates can either be specified when creating the init.csv or when calling `create_diff_df`.
 
-
+Likewise, calling `create_diff_df` will return the filepath where the created empty_diff_df.csv is saved and its contents will appear in the active Stata dataset. The required arguments are the filepath to the init.csv, the [date_format](#valid_date_formats) used in the init.csv and the frequency of the data being considered for the unpooled difference-in-differences analysis (daily, weekly, monthly, or yearly). If the frequency of data is not monthly, but quarterly, you can specify freq("monthly") and the optional argument freq_multiplier(3). If covariates is left blank, `create_diff_df` will simply take the covariates specified in the init.csv, otherwise specifying covariates when calling `create_diff_df` will override any covariate specifications made in the init.csv. 
 
 ## Stage Two: Silo
 This command is used during the second stage of the undid process at each silo:
