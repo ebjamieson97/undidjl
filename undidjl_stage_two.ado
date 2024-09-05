@@ -34,7 +34,7 @@ program define undidjl_stage_two
 	
 	qui jl save df
 	
-	jl: outputs = run_stage_two("$filepath", "$local_silo_name", df, "$time_column", "$outcome_column","$local_date_format", consider_covariates = consider_covariates)
+	qui jl: outputs = run_stage_two("$filepath", "$local_silo_name", df, "$time_column", "$outcome_column","$local_date_format", consider_covariates = consider_covariates)
 	
 	qui jl: st_global("filepath_diff", outputs[1][1])
 	qui jl: st_global("filepath_trends", outputs[2][1)	
