@@ -32,6 +32,7 @@ init.csv saved to
 C:/Users/User/Documents/Project Files/init.csv
 ```
 ##### Details
+Calling `create_init_csv` will return the filepath where the created init.csv is saved and its contents will appear in the active Stata dataset.
 
 ## Stage Two: Silo
 This command is used during the second stage of the undid process at each silo:
