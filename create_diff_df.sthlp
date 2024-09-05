@@ -19,7 +19,7 @@ such as ["yyyy/mm/dd", "yyyy-mm-dd", "yyyymmdd", "yyyy/dd/mm", "yyyy-dd-mm", "yy
 which should be inputed as either "daily", "weekly", "monthly", or "yearly".
 
 If no covariates are specified in the init.csv you can specify them when calling create_diff_df by specifying them as a single string (e.g. covariates("asian black male")). 
-freq_multiplier can optionally be set as some non-zero integer although it should be inputed as a string (e.g. freq_multiplier("5")). 
+freq_multiplier can optionally be set as some non-zero integer. 
 confine_matching can be set to "true" or "false" but is set to "true" by default. If it is set to false the data at the silos will be 'fuzzy matched' to the closest dates
 specified in the empty_diff_df diff_times column. This has no bearing if there is a common treatment time and only takes effect if there is staggered adoption. 
 The default date matching procedure matches dates at each silo to the most recently passed date in the diff_times column from the empty_diff_df. 
