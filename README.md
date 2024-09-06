@@ -66,8 +66,16 @@ These commands are used during the third and final stage of undid:
 6. **undidjl_stage_three**: Computes aggregate ATT and standard error as well as ATTs by silo, g group, or gt group.
 7. **plot_parallel_trends**: Plots parallel trends figures.
 
+##### Examples
+```stata
+undidjl_stage_three, folder("C:/Users/User/Documents/Files From Silos") agg("g")
 
+# Saving combined_diff_data.csv to C:\Current Working Directory
+# Saving UNDID_results.csv to C:\Current Working Directory
+```
 
+##### Details
+`undidjl_stage_three` takes in a path to the folder containing all of the filled_diff_df_$local_silo_name.csv's as a string and returns the aggregate ATT and standard error to the active Stata dataset and saves these results to UNDID_results.csv in the current working directory. The *agg* argument specifies the aggregation method. By default it is set to "silo" so that the ATTs are aggregated by silos, but can be set to "gt" or "g" instead. Aggregating across g calculates ATTs for groups based on when the treatment time was, with each g group having equal weight. Aggregating across gt calculates ATTs for groups based on when the treatment time was and the time for which the ATT is calculated. This option is ignored in the case of a common treatment time and only takes effect in the case of staggered adoption. *covariates* can be set to "true" or "false" ("false" by default) and determines whether or not to use the diff_estimate column from the filled_diff_df's or the diff_estimate_covariates column when calculating ATTs. *save_csv* can be set to "true" or "false" ("true" by default) and saves the combined_diff_df.csv to the current working directory if set to "true". *interpolation* is set to "false" to default, but can be set to "linear_function". This is used to filled in any missing diff_estimate or diff_estimate_covariates values in the combined_diff_df. There must be at least one value for the (silo,g) group for which a missing value is being estimated in order for this to work. 
 
 
 ### Appendix
