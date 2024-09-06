@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_three*/
 /*written by Eric Jamieson */
-/*version 0.1.1 2024-09-06 */
+/*version 0.1.2 2024-09-06 */
 /*------------------------------------*/
 version 14.1
 
@@ -46,6 +46,7 @@ program define undidjl_stage_three
 	// Parse save_all_csvs
 	if  "`save_csv'" == "" | "`save_csv'" == "TRUE" | "`save_csv'" == "true" | "`save_csv'" == "T" | "`save_csv'" == "True" {
 		qui jl: save_all_csvs = true
+		di as result "Saving combined_diff_data.csv to " "`c(pwd)'"
 	}
 	else if "`save_csv'" == "FALSE" | "`save_csv'" == "false" | "`save_csv'" == "F" | "`save_csv'" == "False" {
 		qui jl: save_all_csvs = false
@@ -81,9 +82,12 @@ program define undidjl_stage_three
 	
 	jl use results, clear	 
 	
+	di as result "Saving UNDID_results.csv to " "`c(pwd)'"
+	
 end 
 
 /*--------------------------------------*/
 /* Change Log */
 /*--------------------------------------*/
 *0.1.1 - changed column types from Any to Float64 to ensure data is passed to Stata properly and changed argument from save_all_csvs to save_csv and now defaults to true
+*0.1.2 - display filepaths for saved .csv files
