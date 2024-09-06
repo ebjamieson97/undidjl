@@ -77,11 +77,11 @@ undidjl_stage_three, folder("C:/Users/User/Documents/Files From Silos") agg("g")
 ```stata
 plot_parallel_trends, folder("C:/Users/User/Documents/Files From Silos") outcome_variable("College Attendance") date_format("yearly")
 ```
-![Parallel trends plot with seperated silos](./silos46_58_71_73.png)
+![Parallel trends plot with seperated silos](./images/silos46_58_71_73.png)
 ```stata
 plot_parallel_trends, folder("C:/Users/User/Documents/Files From Silos") outcome_variable("College Attendance") date_format("yearly") combine("true")
 ```
-![Parallel trends plot with silos combined as one control line and one treatment line](./silos46_58_71_73_combined.png)
+![Parallel trends plot with silos combined as one control line and one treatment line](./images/silos46_58_71_73_combined.png)
 ##### Details
 `undidjl_stage_three` takes in a path to the folder containing all of the filled_diff_df_$silo_name.csv's as a string and returns the aggregate ATT and standard error to the active Stata dataset and saves these results to UNDID_results.csv in the current working directory. The *agg* argument specifies the aggregation method. By default it is set to "silo" so that the ATTs are aggregated by silos, but can be set to "gt" or "g" instead. Aggregating across g calculates ATTs for groups based on when the treatment time was, with each g group having equal weight. Aggregating across gt calculates ATTs for groups based on when the treatment time was and the time for which the ATT is calculated. This option is ignored in the case of a common treatment time and only takes effect in the case of staggered adoption. *covariates* can be set to "true" or "false" ("false" by default) and determines whether or not to use the diff_estimate column from the filled_diff_df's or the diff_estimate_covariates column when calculating ATTs. *save_csv* can be set to "true" or "false" ("true" by default) and saves the combined_diff_df.csv to the current working directory if set to "true". *interpolation* is set to "false" to default, but can be set to "linear_function". This is used to filled in any missing diff_estimate or diff_estimate_covariates values in the combined_diff_df. There must be at least one value for the (silo,g) group for which a missing value is being estimated in order for this to work. 
 
@@ -110,5 +110,5 @@ plot_parallel_trends, folder("C:/Users/User/Documents/Files From Silos") outcome
 - `yyyy` → 1990
 
 #### Undid Schematic 
-![Diagram showing how difference-in-differences is computed with unpoolable data](./undid_schematic.png)
+![Diagram showing how difference-in-differences is computed with unpoolable data](./images/undid_schematic.png)
 
