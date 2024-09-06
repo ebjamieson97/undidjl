@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_diff_df*/
 /*written by Eric Jamieson */
-/*version 0.1.2 2024-09-05 */
+/*version 0.1.3 2024-09-06 */
 /*------------------------------------*/
 version 14.1
 
@@ -14,7 +14,7 @@ program define create_diff_df
 	jl: using Undid
 	
 	// Allow variables to be passed to Julia
-	global filepath = "`filepath'"
+	global filepath = subinstr("`filepath'", "\", "/", .)
 	global date_format = "`date_format'"
 	global freq = "`freq'"
 	 
@@ -76,3 +76,4 @@ end
 /*--------------------------------------*/
 *0.1.1 - now returns the df to active Stata dataset, as well as prints out empty_diff_df.csv filepath
 *0.1.2 - Stata can't handle (g;t) name for column so renamed to gt
+*0.1.3 - converts and backslashes to forwardslashes for better compatability between Julia and Stata
