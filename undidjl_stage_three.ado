@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_three*/
 /*written by Eric Jamieson */
-/*version 0.1.0 2024-08-27 */
+/*version 0.1.1 2024-09-06 */
 /*------------------------------------*/
 version 14.1
 
@@ -9,10 +9,11 @@ version 14.1
 cap program drop undidjl_stage_three
 program define undidjl_stage_three
 
-	syntax , folder(string) [agg(string) covariates(string) save_all_csvs(string) interpolation(string)]
+	syntax , folder(string) [agg(string) covariates(string) save_csv(string) interpolation(string)]
 	
 	// Declare usage of Undid and start up Julia
 	jl: using Undid
+	jl: using DataFrames
 	
 	// Allow variables to be passed to Julia
 	global folder = "`folder'"
@@ -43,14 +44,14 @@ program define undidjl_stage_three
 	}
 	
 	// Parse save_all_csvs
-	if "`save_all_csvs'" == "TRUE" | 	"`save_all_csvs'" == "true" | "`save_all_csvs'" == "T" | "`save_all_csvs'" == "True" {
+	if  "`save_csv'" == "" | "`save_csv'" == "TRUE" | "`save_csv'" == "true" | "`save_csv'" == "T" | "`save_csv'" == "True" {
 		qui jl: save_all_csvs = true
 	}
-	else if "`save_all_csvs'" == "" | "`save_all_csvs'" == "FALSE" | "`save_all_csvs'" == "false" | "`save_all_csvs'" == "F" | "`save_all_csvs'" == "False" {
+	else if "`save_csv'" == "FALSE" | "`save_csv'" == "false" | "`save_csv'" == "F" | "`save_csv'" == "False" {
 		qui jl: save_all_csvs = false
 	}
 	else { 
-		display as error "Error: set save_all_csvs to true or false or omit the argument (defaults to false)"
+		display as error "Error: set save_csv to true or false or omit the argument (defaults to true)"
 	}
 	
 	// Parse interpolation
@@ -66,6 +67,23 @@ program define undidjl_stage_three
 		
 	qui jl: results = run_stage_three("$folder", agg = agg, covariates = covariates, save_all_csvs = save_all_csvs, interpolation = interpolation)
 	
+	qui jl: if "ATT_g" in DataFrames.names(results) ///
+				results.ATT_g = Float64.(results.ATT_g); ///
+			end 
+			
+	qui jl: if "ATT_s" in DataFrames.names(results) ///
+				results.ATT_s = Float64.(results.ATT_s); ///
+			end 
+			
+	qui jl: if "ATT_gt" in DataFrames.names(results) ///
+				results.ATT_gt = Float64.(results.ATT_gt); ///
+			end 
+	
 	jl use results, clear	 
 	
 end 
+
+/*--------------------------------------*/
+/* Change Log */
+/*--------------------------------------*/
+*0.1.1 - changed column types from Any to Float64 to ensure data is passed to Stata properly and changed argument from save_all_csvs to save_csv and now defaults to true
