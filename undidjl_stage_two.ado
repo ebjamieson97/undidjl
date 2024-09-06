@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_two*/
 /*written by Eric Jamieson */
-/*version 0.1.4 2024-09-05 */
+/*version 0.1.5 2024-09-06 */
 /*------------------------------------*/
 version 14.1
 
@@ -14,7 +14,7 @@ program define undidjl_stage_two
 	jl: using Undid
 	
 	// Allow variables to be passed to Julia
-	global filepath = "`filepath'"
+	global filepath = subinstr("`filepath'", "\", "/", .)
 	global local_silo_name = "`local_silo_name'"
 	global time_column = "`time_column'"
 	global outcome_column = "`outcome_column'"
@@ -93,3 +93,4 @@ end
 *0.1.2 - now returns either the trends data or filled diff df to the active Stata dataset
 *0.1.3 - fixed several typos, forget to close some brackets
 *0.1.4 - convert numerical columns to Float64, so long as there are no missing values in column
+*0.1.5 - converts any backslashes to forward slashes for better compatability between Julia and Stata
