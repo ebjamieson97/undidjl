@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_three*/
 /*written by Eric Jamieson */
-/*version 0.1.2 2024-09-06 */
+/*version 0.1.3 2024-09-06 */
 /*------------------------------------*/
 version 14.1
 
@@ -16,7 +16,7 @@ program define undidjl_stage_three
 	jl: using DataFrames
 	
 	// Allow variables to be passed to Julia
-	global folder = "`folder'"
+	global folder = subinstr("`folder'", "\", "/", .)
 
 	// Parse agg 
 	if "`agg'" == "" | "`agg'" == "silo"{
@@ -91,3 +91,4 @@ end
 /*--------------------------------------*/
 *0.1.1 - changed column types from Any to Float64 to ensure data is passed to Stata properly and changed argument from save_all_csvs to save_csv and now defaults to true
 *0.1.2 - display filepaths for saved .csv files
+*0.1.3 - backslashes to forwardslashes fixes Julia-Stata compatability issue
