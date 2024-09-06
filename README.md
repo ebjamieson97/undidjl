@@ -63,8 +63,8 @@ local_date_format specifies the [format](#valid-date-formats) of the date string
 ## Stage Three: Analysis
 These commands are used during the third and final stage of undid:
 
-6. **undidjl_stage_three**: Executes the third stage of undid.
-7. **plot_parallel_trends**: Plots the parallel trends figures.
+6. **undidjl_stage_three**: Computes aggregate ATT and standard error as well as ATTs by silo, g group, or gt group.
+7. **plot_parallel_trends**: Plots parallel trends figures.
 
 
 
