@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*plot_parallel_trends*/
 /*written by Eric Jamieson */
-/*version 0.1.0 2024-09-04 */
+/*version 0.1.1 2024-09-06 */
 /*------------------------------------*/
 version 14.1
 
@@ -22,7 +22,7 @@ program define plot_parallel_trends
 	jl: using Undid
 	
 	// Allow variables to be passed to Julia
-	qui global folder = "`folder'"
+	global folder = subinstr("`folder'", "\", "/", .)
 	qui global outcome_variable = "`outcome_variable'"
 	
 	// Parse save_csv
@@ -173,15 +173,14 @@ program define plot_parallel_trends
 	// Plot
 	qui encode silo_name, gen(silo_id)
 	qui xtset silo_id date
-	qui xtline y, overlay ///
+	xtline y, overlay ///
     title("$outcome_variable$resid") ///
     ytitle("Mean $outcome_variable$resid") ///
 	xtitle("") ///
     xlabel(`labels', format($date_format) labsize(small)) /// 
 	ylabel(, labsize(small) nogrid) /// 
 	xline(`treatment_xlines', lpattern(dash) lcolor(gs13)) /// 
-	graphregion(color(white)) /// 
-
+	graphregion(color(white)) 
 end 
 
 
@@ -191,3 +190,4 @@ end
 *0.0.0 - initialized
 *0.0.1 - working as a beta version
 *0.1.0 - added ability to combine groups by treatment status and dashed lines to mark treatment times
+*0.1.1 - fixed Julia-Stata compat issue: convert backslashes to forwardslashes
