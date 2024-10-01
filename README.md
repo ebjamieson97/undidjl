@@ -44,7 +44,7 @@ Likewise, calling `create_diff_df` will return the filepath where the created em
 ## Stage Two: Silo
 This command is used during the second stage of the undid process at each silo:
 
-5. **undidjl_state_two**: Grabs information from the empty_diff_df.csv and the local silo data to fill out that silo's portion of the empty_diff_df.csv which is then saved as filled_diff_df_$local_silo_name.csv. Also computes trends data of the outcome of interest which is saved as trends_data_$local_silo_name.csv.
+5. **undidjl_stage_two**: Grabs information from the empty_diff_df.csv and the local silo data to fill out that silo's portion of the empty_diff_df.csv which is then saved as filled_diff_df_$local_silo_name.csv. Also computes trends data of the outcome of interest which is saved as trends_data_$local_silo_name.csv.
 
 ##### Examples
 ```stata
