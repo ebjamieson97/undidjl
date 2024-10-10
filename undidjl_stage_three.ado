@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_three*/
 /*written by Eric Jamieson */
-/*version 0.1.3 2024-09-06 */
+/*version 0.1.4 2024-10-10 */
 /*------------------------------------*/
 version 14.1
 
@@ -79,10 +79,129 @@ program define undidjl_stage_three
 	qui jl: if "ATT_gt" in DataFrames.names(results) ///
 				results.ATT_gt = Float64.(results.ATT_gt); ///
 			end 
+			
+	qui jl: if "treatment_time" in DataFrames.names(results) ///
+				results.treatment_time = string.(results.treatment_time); ///
+			end 
+			
 	
 	jl use results, clear	 
 	
+	qui capture confirm variable treatment_time
+	qui if _rc == 0 {
+		qui capture confirm variable jackknife_SE 
+		qui if _rc == 0 {
+			local num_obs = num_silos
+			drop num_silos
+		}
+	}
+	
+	qui capture confirm variable jackknife_SE
+	qui if _rc == 0 {
+		local t_val = agg_ATT / jackknife_SE
+		if "`num_obs'" == "" {
+			local num_obs = _N
+		}
+		gen p_value_jackknife = .
+		replace p_value_jackknife = 2*ttail(`num_obs'-1, abs(`t_val')) if !missing(jackknife_SE)
+		order p_value_jackknife, after(jackknife_SE)
+	}
+	
+	
+	
 	di as result "Saving UNDID_results.csv to " "`c(pwd)'"
+	
+	qui count
+	local N = r(N)
+	local condition_met 0
+	
+	qui capture confirm variable ATT_s
+	if _rc == 0 & `condition_met' == 0 {
+		local condition_met 1
+		di as text "------------------------------------------------------"
+		di as text "                     UNDID Results                    "
+		di as text "------------------------------------------------------"
+		di as text "Silo                      | " as text "ATT                      |"
+		di as text "--------------------------|--------------------------|"
+		forvalues i = 1/`N' {
+			di as text %-25s "`=silos[`i']'" as text " |" as result %-25.7f ATT_s[`i'] as text " |"
+    
+			di as text "--------------------------|--------------------------|"
+		}
+		di as text "Aggregation: " as result "silo"
+		di as text "Aggregate ATT: " as result agg_ATT[1]
+		di as text "Jackknife SE: " as result jackknife_SE[1]
+		di as text "Jackknife p-value: " as result p_value_jackknife[1]
+		di as text "RI p-value: " as result p_value_RI[1]
+	} 
+	
+	qui capture confirm variable ATT_gt
+	if _rc == 0 & `condition_met' == 0 {
+		local condition_met 1
+		di as text "------------------------------------------------------"
+		di as text "                     UNDID Results                    "
+		di as text "------------------------------------------------------"
+		di as text "(g,t)                     | " as text "ATT                      |"
+		di as text "--------------------------|--------------------------|"
+		forvalues i = 1/`N' {
+			di as text %-25s "`=gt[`i']'" as text " |" as result %-25.7f ATT_gt[`i'] as text " |"
+    
+			di as text "--------------------------|--------------------------|"
+		}
+		di as text "Aggregation: " as result "gt"
+		di as text "Aggregate ATT: " as result agg_ATT[1]
+		di as text "Jackknife SE: " as result jackknife_SE[1]
+		di as text "Jackknife p-value: " as result p_value_jackknife[1]
+		di as text "RI p-value: " as result p_value_RI[1]
+	} 
+	
+	qui capture confirm variable ATT_g
+	if _rc == 0 & `condition_met' == 0 {
+		local condition_met 1
+		di as text "------------------------------------------------------"
+		di as text "                     UNDID Results                    "
+		di as text "------------------------------------------------------"
+		di as text "g                         | " as text "ATT                      |"
+		di as text "--------------------------|--------------------------|"
+		forvalues i = 1/`N' {
+			di as text %-25s "`=g[`i']'" as text " |" as result %-25.7f ATT_g[`i'] as text " |"
+    
+			di as text "--------------------------|--------------------------|"
+		}
+		di as text "Aggregation: " as result "g"
+		di as text "Aggregate ATT: " as result agg_ATT[1]
+		di as text "Jackknife SE: " as result jackknife_SE[1]
+		di as text "Jackknife p-value: " as result p_value_jackknife[1]
+		di as text "RI p-value: " as result p_value_RI[1]
+	}
+	
+	qui capture confirm variable treatment_time
+	if _rc == 0 & `condition_met' == 0 {
+		local condition_met 1
+		di as text "------------------------------------------------------"
+		di as text "                     UNDID Results                    "
+		di as text "------------------------------------------------------"
+		di as text "Common Treatment Time: " as result treatment_time[1]
+		di as text "------------------------------------------------------"
+		di as text "Aggregate ATT: " as result agg_ATT[1]
+		qui capture confirm variable jackknife_SE
+		if _rc == 0 {
+			di as text "Jackknife SE: " as result jackknife_SE[1]
+			di as text "Jackknife p-value: " as result p_value_jackknife[1]
+		}
+		qui capture confirm variable SE
+		if _rc == 0 {
+			drop p_value_RI
+			di as text "Standard Error: " as result SE[1]
+			qui local t_val = agg_ATT / SE
+			qui gen p_value = 2*ttail(1, abs(`t_val'))
+			di as text "p-value: " as result p_value[1]
+		}
+		else {
+			di as text "RI p-value: " as result p_value_RI[1]
+		}
+		
+	}
 	
 end 
 
@@ -92,3 +211,4 @@ end
 *0.1.1 - changed column types from Any to Float64 to ensure data is passed to Stata properly and changed argument from save_all_csvs to save_csv and now defaults to true
 *0.1.2 - display filepaths for saved .csv files
 *0.1.3 - backslashes to forwardslashes fixes Julia-Stata compatability issue
+*0.1.4 - added p-values and output displays
