@@ -17,7 +17,9 @@ undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
 
 {phang2}{cmd:checkundidversion}
 
-{phang2}Currently installed version of Undid.jl is: 0.1.2 Check https://github.com/ebjamieson97/Undid.jl/blob/main/Project.toml to see latest version number.
+{phang2}Currently installed version of Undid.jl is: 0.1.18
+Latest version of Undid.jl is: 0.1.18
+Consider running command updateundid if installed version is out of date.
 
 {title:Author}
 
@@ -30,4 +32,4 @@ For more information about Undid.jl, visit the {browse "https://github.com/ebjam
 {title:Citation}
 
 {pstd}
-Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data. {p_end}
+Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data. {browse "https://arxiv.org/abs/2403.15910"}  {p_end}
