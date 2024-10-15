@@ -33,6 +33,23 @@ Updates Undid.jl to the latest version if Undid.jl is already installed.
 
 #### 4. `create_init_csv` - Creates an initial .csv file (init.csv), displays its filepath, and returns its contents to the active Stata dataset.
 
+Generates an initial `.csv` file (`init.csv`) specifying the silo names, start times, end times, and treatment times. This file is then used to create the `empty_diff_df.csv`, which is sent to each silo. If `create_init_csv` is called without providing any silo names, start times, end times, or treatment times, an `init.csv` will be created with the appropriate column headers and blank columns. 
+
+Control silos should be marked with "control" in the treatment_times column.
+
+Covariates may be specified when calling `create_init_csv` or when calling `create_diff_df`.
+
+Ensure that dates are all entered in the same date format, a list of acceptable date formats can be seen [here.](#valid-date-formats)
+
+#### For purposes of demonstration, the impact of merit scholarships on college attendance is being considered as an example. In practice, it is reccommended to call create_init_csv without specifying any arguments and filling out the init.csv manually in the case of many silos as we have here.
+```stata
+. create_init_csv, silo_names("71 58 64 59 85 57 72 61 34 88 11 12 13 14 15 16 21 22 23 31 32 33 35 41 42 43 44 45 46 47 51 52 53 54 55 56 62 63 73 74 81 82 83 84 86 87 91 92 93 94 95") start_times("1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989 1989") end_times("2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000 2000") treatment_times("1991 1993 1996 1997 1997 1998 1998 1999 2000 2000 control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control control")
+
+
+init.csv saved to
+C:/Users/Eric Bruce Jamieson/Documents/Dalhousie Work/undidjl/init.csv
+```
+
 3. **create_init_csv**: Creates an initial .csv file (init.csv) specifying the silos, start times, end times, and treatment (or lack thereof) times.
 4. **create_diff_df**: Creates a .csv file (empty_diff_df.csv) using information from the init.csv specifying the required differences to be calculated at each silo.
 
