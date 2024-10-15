@@ -7,6 +7,12 @@ Undid allows for estimation of difference-in-differences with unpoolable data, s
 ```stata
 net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidjl/main/")
 ```
+### Update
+```stata
+ado uninstall undidjl
+net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidjl/main/")
+```
+
 ## Requirements
 * Julia 1.9.4 or later
 * Stata 14.1 or later
