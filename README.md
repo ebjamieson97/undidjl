@@ -182,7 +182,6 @@ RI p-value: .5
 #### 7. `plot_parallel_trends` - Plots trends figures.
 
 
-##### Examples
 ```stata
 undidjl_stage_three, folder("C:/Users/User/Documents/Files From Silos") agg("g")
 
