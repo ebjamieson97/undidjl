@@ -66,26 +66,36 @@ Ensure that dates are all entered in the same date format, a list of acceptable 
 init.csv saved to
 C:/Users/User/Documents/Project Files/init.csv
 ```
+
+#### 4. `create_diff_df` - Creates the .csv file to be sent out to each silo (empty_diff_df.csv), displays its filepath, and returns its contents to the active Stata dataset.
+
+Creates the `empty_diff_df.csv` which lists all of the differences that need to calculated at each silo in order to compute the aggregate ATT. The `empty_diff_df.csv` is then sent out to each silo to be filled out.
+
+**Parameters:**
+
+- **filepath** (*string, required*):  
+  A string specifying the filepath to the `init.csv`.
   
+- **date_format** (*string, required*):  
+  A string which specifies the [date_format](#valid-date-formats) used in the `init.csv`. 
 
-3. **create_init_csv**: Creates an initial .csv file (init.csv) specifying the silos, start times, end times, and treatment (or lack thereof) times.
-4. **create_diff_df**: Creates a .csv file (empty_diff_df.csv) using information from the init.csv specifying the required differences to be calculated at each silo.
+- **freq** (*string, required*):  
+  A string which indicates the length of the time periods to be used when computing the differences in mean outcomes between periods at each silo.
+  - "daily", "weekly", "monthly", or "yearly"
 
-##### Examples
+- **covariates** (*string, optional*):  
+  A string specifying covariates to be considered at each silo. If left blank uses covariates from `init.csv`. 
+
+- **freq_multiplier** (*integer or string, optional*):  
+  Specify if the frequency should be multiplied by a non-zero integer. For example, if the time periods to consider are two years, set `freq("yearly") freq_multiplier(2)`.
+
 ```stata
-create_init_csv, silo_names("71 73 58 46") start_times("1989 1989 1989 1989") end_times("2000 2000 2000 2000") treatment_times("1991 control 1993 control") covariates("asian black male")
-# init.csv saved to
-# C:/Users/User/Documents/Project Files/init.csv
+. create_diff_df, filepath("C:/Users/User/Documents/Project Files/init.csv") date_format("yyyy") freq("yearly")
 
-
-create_diff_df, filepath("C:/Users/User/Documents/Project Files/init.csv") date_format("yyyy") freq("yearly")
-# empty_diff_df.csv saved to
-# C:/Users/User/Documents/Project Files/empty_diff_df.csv
+empty_diff_df.csv saved to
+C:/Users/User/Documents/Project Files/empty_diff_df.csv
 ```
-##### Details
-Calling `create_init_csv` will return the filepath where the created init.csv is saved and its contents will appear in the active Stata dataset. All of the options for `create_init_csv` are optional and thus `create_init_csv` can be called to create a blank init.csv file with only the appropriate headers which can then be filled out manually. Dates can be entered in a wide variety of formats shown [here](#valid-date-formats). Ensure that dates are consistently entered in the same format when creating the init.csv. Control silos should be marked with "control" in the treatment_times column (e.g. silos 73 & 46 in the above example). Covariates can either be specified when creating the init.csv or when calling `create_diff_df`.
 
-Likewise, calling `create_diff_df` will return the filepath where the created empty_diff_df.csv is saved and its contents will appear in the active Stata dataset. The required arguments are the filepath to the init.csv, the [date_format](#valid-date-formats) used in the init.csv and the frequency of the data being considered for the unpooled difference-in-differences analysis (daily, weekly, monthly, or yearly). If the frequency of data is not monthly, but quarterly, you can specify freq("monthly") and the optional argument freq_multiplier(3). If covariates is left blank, `create_diff_df` will simply take the covariates specified in the init.csv, otherwise specifying covariates when calling `create_diff_df` will override any covariate specifications made in the init.csv. 
 
 ## Stage Two: Silo
 This command is used during the second stage of the undid process at each silo:
