@@ -77,7 +77,7 @@ Creates the `empty_diff_df.csv` which lists all of the differences that need to 
   A string specifying the filepath to the `init.csv`.
   
 - **date_format** (*string, required*):  
-  A string which specifies the [date_format](#valid-date-formats) used in the `init.csv`. 
+  A string which specifies the [date format](#valid-date-formats) used in the `init.csv`. 
 
 - **freq** (*string, required*):  
   A string which indicates the length of the time periods to be used when computing the differences in mean outcomes between periods at each silo.
