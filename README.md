@@ -147,7 +147,35 @@ C:/Users/User/Current Folder/trends_data_73.csv
 
 Takes in all of the `filled_diff_df_$silo_name.csv`'s and uses them to compute the aggregate ATT and standard errors. If errors persist, check to see if there are missing values of `diff_estimates` in the `combined_diff_data.csv` and if so consider setting `interpolation = "linear_function"`. 
 
-**Parameters**: 
+**Parameters:**
+
+- **folder** (*string, required*):  
+  A string specifying the filepath to the folder containing all of the `filled_diff_df_$silo_name.csv`'s.
+  
+- **agg** (*string, required*):  
+  A string which specifies the aggregation methodology for computing the aggregate ATT. Either `"silo"`, `"g"`, or `"gt"`. Defaults to `"silo"`. 
+
+```stata
+. undidjl_stage_three, folder("C:/Users/User/Documents/Files From Silos") agg("g")
+
+Saving combined_diff_data.csv to C:\Current Working Directory
+Saving UNDID_results.csv to C:\Current Working Directory
+
+------------------------------------------------------
+                     UNDID Results                    
+------------------------------------------------------
+g                         | ATT                      |
+--------------------------|--------------------------|
+1991                      |-0.0169201                |
+--------------------------|--------------------------|
+1993                      |0.1606055                 |
+--------------------------|--------------------------|
+Aggregation: g
+Aggregate ATT: .07184272
+Jackknife SE: .08876282
+Jackknife p-value: .56682265
+RI p-value: .5
+```
 
 
 
