@@ -59,9 +59,12 @@ Ensure that dates are all entered in the same date format, a list of acceptable 
   A string specifying covariates to be considered at each silo.
 
 ```stata
-create_init_csv, silo_names("71 73 58 46") start_times("1989 1989 1989 1989") end_times("2000 2000 2000 2000") treatment_times("1991 control 1993 control") covariates("asian black male")
-# init.csv saved to
-# C:/Users/User/Documents/Project Files/init.csv
+* Using a subset of data from the merit scholarship example shown in https://arxiv.org/abs/2403.15910
+
+. create_init_csv, silo_names("71 73 58 46") start_times("1989 1989 1989 1989") end_times("2000 2000 2000 2000") treatment_times("1991 control 1993 control") covariates("asian black male")
+
+init.csv saved to
+C:/Users/User/Documents/Project Files/init.csv
 ```
   
 
