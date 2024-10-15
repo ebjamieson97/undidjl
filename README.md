@@ -142,10 +142,17 @@ C:/Users/User/Current Folder/trends_data_73.csv
 ```
 
 ## Stage Three: Analysis
-These commands are used during the third and final stage of undid:
 
-6. **undidjl_stage_three**: Computes aggregate ATT and standard error as well as ATTs by silo, g group, or gt group.
-7. **plot_parallel_trends**: Plots parallel trends figures.
+#### 6. `undidjl_stage_three` - Computes and displays UNDID results (aggregate ATT, standard errors, p-values).
+
+Takes in all of the `filled_diff_df_$silo_name.csv`'s and uses them to compute the aggregate ATT and standard errors. If errors persist, check to see if there are missing values of `diff_estimates` in the `combined_diff_data.csv` and if so consider setting `interpolation = "linear_function"`. 
+
+**Parameters**: 
+
+
+
+#### 7. `plot_parallel_trends` - Plots trends figures.
+
 
 ##### Examples
 ```stata
