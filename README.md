@@ -98,23 +98,48 @@ C:/Users/User/Documents/Project Files/empty_diff_df.csv
 
 
 ## Stage Two: Silo
-This command is used during the second stage of the undid process at each silo:
 
-5. **undidjl_stage_two**: Grabs information from the empty_diff_df.csv and the local silo data to fill out that silo's portion of the empty_diff_df.csv which is then saved as filled_diff_df_$local_silo_name.csv. Also computes trends data of the outcome of interest which is saved as trends_data_$local_silo_name.csv.
+#### 5. `undidjl_stage_two` - Creates an two .csv files (filled_diff_df_$silo_name.csv and trends_data_$silo_name.csv), displays their filepaths, and returns one .csv's contents to the active Stata dataset.
 
-##### Examples
+Based on the information given in the `empty_diff_df.csv`, computes the appropriate differences in mean outcomes at the local silo and saves as `filled_diff_df_$silo_name.csv`. 
+
+Note that the `time_column` should reference a string variable. This is in order to facilitate passing date information between Stata and Julia. 
+
+Further, covariates at the local silo should be renamed to match the spelling used in the `empty_diff_df.csv`. 
+
+**Parameters:**
+
+- **filepath** (*string, required*):  
+  A string specifying the filepath to the `empty_diff_df.csv`.
+  
+- **local_silo_name** (*string, required*):  
+  A string which specifies the local silo's name as it is written in the `empty_diff_df`. 
+
+- **time_column** (*string, required*):  
+  A string which indicates the name of the variable in the local silo data which contains the date information. This variable should be a string. 
+
+- **outcome_column** (*string, required*):  
+  A string specifying the name of the variable in the local silo data which contains the outcome of interest.
+
+- **local_date_format** (*string, required*):  
+  A string specifying the [date format](#valid-date-formats) used in the `time_column` variable. 
+  
+- **consider_covariates** (*string, optional*):  
+  A string which if set to `false` ignores computations involving the covariates specified in the `empty_diff_df.csv`. Defaults to `true`. 
+
+- **view_dataframe** (*string, optional*):  
+  Specify which dataframe should be passed back to Stata's active dataset. Either `"trends"` or `"diff"`. Defaults to `"diff"`.
+
 ```stata
-use "C:\Users\User\Data\State73.dta", clear
-undidjl_stage_two, filepath("C:/Users/User/Documents/csvs/empty_diff_df.csv") local_silo_name("73") time_column("date_str") outcome_column("coll") local_date_format("ddmonyyyy") view_dataframe("trends")
-# filled_diff_df_73.csv saved to
-# C:/Users/User/Current Folder/filled_diff_df_73.csv
-# trends_data_73.csv saved to
-# C:/Users/User/Current Folder/trends_data_73.csv
-```
-##### Details
-In order to run `undidjl_stage_two`, the local silo data must be loaded as the active dataset in Stata and any covariates specified in the empty_diff_df.csv should be renamed at the local silo to conform with the variable names used in the empty_diff_df.csv. The local_silo_name argument is used to specify how your local silo is named within the empty_diff_df.csv file and must correspond to how it is written there. The time_column and outcome_column arguments are used to indicate which variable in your active dataset is the outcome of interest and which variable indicates the date at which that outcome was recorded. It is important to note that the time_column should reference a string variable as passing a Stata date object to Julia does not work well. 
+* An analogous script would be run at each silo (71, 73, 58 and 46)
+. use "C:\Users\User\Data\State73.dta", clear
+. undidjl_stage_two, filepath("C:/Users/User/Documents/csvs/empty_diff_df.csv") local_silo_name("73") time_column("date_str") outcome_column("coll") local_date_format("ddmonyyyy") view_dataframe("trends")
 
-local_date_format specifies the [format](#valid-date-formats) of the date strings found in the time_column and is needed in order to parse the string to a date object within Julia. view_dataframe is set to "diff" if not specified but can be set to "trends" or "diff" and will return either the trends_data or the filled_diff_df to the active Stata dataset based on the selection, either way both dataframes are saved as .csv's. A final option is consider_covariates which is "true" by default but can be set to "false" if the covariates specified in Stage 1 do not exist at the local silo. 
+filled_diff_df_73.csv saved to
+C:/Users/User/Current Folder/filled_diff_df_73.csv
+trends_data_73.csv saved to
+C:/Users/User/Current Folder/trends_data_73.csv
+```
 
 ## Stage Three: Analysis
 These commands are used during the third and final stage of undid:
