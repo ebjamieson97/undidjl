@@ -1,7 +1,7 @@
 # undidjl
 This Stata package acts as a wrapper for the Julia package Undid.jl. 
 
-Undid allows for estimation of difference-in-differences with unpoolable data, see https://arxiv.org/abs/2403.15910 for more details.
+undidjl allows for estimation of difference-in-differences with unpoolable data, see https://arxiv.org/abs/2403.15910 for more details.
 
 ## Installation 
 ```stata
