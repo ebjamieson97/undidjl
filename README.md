@@ -25,22 +25,13 @@ These commands allow for managing the Undid.jl package for Julia from Stata:
 
 Displays the currently installed and the latest version of the Undid.jl package. If Undid.jl is not installed, installs Undid.jl.
 
-```stata
-. checkundidversion
-
-
-Currently installed version of Undid.jl is: 0.1.18
-Latest version of Undid.jl is: 0.1.18
-Consider running command updateundid if installed version is out of date.
-```
-
 #### 2. `updateundid`
 
 Updates Undid.jl to the latest version if Undid.jl is already installed.
 
-
 ## Stage One: Initialize
-These commands are used during the first stage of the undid process:
+
+#### 4. `create_init_csv` - Creates an initial .csv file (init.csv), displays its filepath, and returns its contents to the active Stata dataset.
 
 3. **create_init_csv**: Creates an initial .csv file (init.csv) specifying the silos, start times, end times, and treatment (or lack thereof) times.
 4. **create_diff_df**: Creates a .csv file (empty_diff_df.csv) using information from the init.csv specifying the required differences to be calculated at each silo.
