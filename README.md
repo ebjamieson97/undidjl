@@ -25,6 +25,15 @@ These commands allow for managing the Undid.jl package for Julia from Stata:
 
 Displays the currently installed and the latest version of the Undid.jl package. If Undid.jl is not installed, installs Undid.jl.
 
+```stata
+. checkundidversion
+
+
+Currently installed version of Undid.jl is: 0.1.18
+Latest version of Undid.jl is: 0.1.18
+Consider running command updateundid if installed version is out of date.
+```
+
 #### 2. `updateundid`
 
 Updates Undid.jl to the latest version if Undid.jl is already installed.
