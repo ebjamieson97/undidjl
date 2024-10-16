@@ -18,6 +18,9 @@ net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidj
 * Stata 14.1 or later
 * the julia package for Stata, see https://github.com/droodman/julia.ado
 
+## Schematic Overiew of undidjl
+![undidjl schematic](./images/undidjl_schematic.png)
+
 ## Utility Commands
 
 #### 1. `checkundidversion`
@@ -260,8 +263,4 @@ plot_parallel_trends, folder("C:/Users/User/Documents/Files From Silos") outcome
 - `mm-yyyy` → 08-1990
 - `mmyyyy` → 081990
 - `yyyy` → 1990
-
-#### Undid Schematic 
-![Diagram showing how difference-in-differences is computed with unpoolable data](./images/undid_schematic.png)
-![undidjl schematic](./images/undidjl_schematic.png)
 
