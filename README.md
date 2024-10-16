@@ -124,7 +124,7 @@ Further, covariates at the local silo should be renamed to match the spelling us
   A string specifying the [date format](#valid-date-formats) used in the `time_column` variable. 
   
 - **consider_covariates** (*string, optional*):  
-  A string which if set to `false` ignores computations involving the covariates specified in the `empty_diff_df.csv`. Defaults to `true`. 
+  A string which if set to `"false"` ignores computations involving the covariates specified in the `empty_diff_df.csv`. Defaults to `"true"`. 
 
 - **view_dataframe** (*string, optional*):  
   Specify which dataframe should be passed back to Stata's active dataset. Either `"trends"` or `"diff"`. Defaults to `"diff"`.
