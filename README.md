@@ -193,7 +193,7 @@ Jackknife p-value: .54253268
 RI p-value: .5
 ```
 
-#### 7. `plot_parallel_trends` - Plots trends figures.
+#### 7. `plot_parallel_trends` - Plots parallel trends figures.
 
 Combines all of the `trends_data_$silo_name.csv` files and uses this data to plot trends by silo or by treated/control status. 
 
