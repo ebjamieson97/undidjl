@@ -19,7 +19,6 @@ net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidj
 * the julia package for Stata, see https://github.com/droodman/julia.ado
 
 ## Utility Commands
-These commands allow for managing the Undid.jl package for Julia from Stata:
 
 #### 1. `checkundidversion`
 
