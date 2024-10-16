@@ -106,13 +106,15 @@ Note that the `time_column` should reference a string variable. This is in order
 
 Further, covariates at the local silo should be renamed to match the spelling used in the `empty_diff_df.csv`. 
 
+Ensure that the local silo data is loaded as Stata's active dataset before running `undidjl_stage_two`. 
+
 **Parameters:**
 
 - **filepath** (*string, required*):  
   A string specifying the filepath to the `empty_diff_df.csv`.
   
 - **local_silo_name** (*string, required*):  
-  A string which specifies the local silo's name as it is written in the `empty_diff_df`. 
+  A string which specifies the local silo's name as it is written in the `empty_diff_df.csv`. 
 
 - **time_column** (*string, required*):  
   A string which indicates the name of the variable in the local silo data which contains the date information. This variable should be a string. 
@@ -146,7 +148,7 @@ C:/Users/User/Current Folder/trends_data_73.csv
 
 Takes in all of the `filled_diff_df_$silo_name.csv`'s and uses them to compute the aggregate ATT and standard errors. 
 
-The `agg` argument specifies the aggregation method. By default it is set to `"silo"` so that the ATTs are aggregated across silos with each silo having equal weight, but can be set to `"gt"` or `"g"` instead. Aggregating across `"g"` calculates ATTs for groups based on when the treatment time was, with each `"g"` group having equal weight. Aggregating across `"gt"` calculates ATTs for groups based on when the treatment time was and the time for which the ATT is calculated. This option is ignored in the case of a common treatment time and only takes effect in the case of staggered adoption.
+The `agg` parameter specifies the aggregation method used in the case of staggered adoption. By default it is set to `"silo"` so that the ATTs are aggregated across silos with each silo having equal weight, but can be set to `"gt"` or `"g"` instead. Aggregating across `"g"` calculates ATTs for groups based on when the treatment time was, with each `"g"` group having equal weight. Aggregating across `"gt"` calculates ATTs for groups based on when the treatment time was and the time for which the ATT is calculated. This `agg` parameter is ignored in the case of a common treatment time and only takes effect in the case of staggered adoption.
 
 If errors persist, check to see if there are missing values of `diff_estimates` in the `combined_diff_data.csv` and if so consider setting `interpolation = "linear_function"`. 
 
@@ -156,7 +158,7 @@ If errors persist, check to see if there are missing values of `diff_estimates` 
   A string specifying the filepath to the folder containing all of the `filled_diff_df_$silo_name.csv`'s.
   
 - **agg** (*string, optional*):  
-  A string which specifies the aggregation methodology for computing the aggregate ATT. Either `"silo"`, `"g"`, or `"gt"`. Defaults to `"silo"`.
+  A string which specifies the aggregation methodology for computing the aggregate ATT in the case of staggered adoption. Either `"silo"`, `"g"`, or `"gt"`. Defaults to `"silo"`.
 
 - **covariates** (*string, optional*):  
   A string (either `"true"` or `"false"`) which specifies whether to use the `diff_estimate` or the `diff_estimate_covariates` column when computing the aggregate ATT. Defaults to `"false"`.
@@ -208,7 +210,7 @@ Combines all of the `trends_data_$silo_name.csv` files and uses this data to plo
   A string (either `"true"` or `"false"`) which determines whether or not to save the `combined_trends_data.csv`. Defaults to `"true"`.
 
 - **covariates** (*string, optional*):  
-  A string (either `"true"` or `"false"`) which whether to plot the mean outcome or the mean outcome residualized by covariates. Defaults to `"false"` (plots the mean outcome). 
+  A string (either `"true"` or `"false"`) which determines whether to plot the mean outcome or the mean outcome residualized by covariates. Defaults to `"false"` (plots the mean outcome). 
 
 - **omit_silos** (*string, optional*):  
   A string which omits the specified silos from the plot.
