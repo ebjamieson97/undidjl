@@ -49,7 +49,7 @@ Ensure that dates are all entered in the same date format, a list of acceptable 
   A string which indicates the starting time for the analysis at each silo.
 
 - **end_times** (*string, optional*):  
-  A string which indicates the starting time for the analysis at each silo.
+  A string which indicates the end time for the analysis at each silo.
 
 - **treatment_times** (*string, optional*):  
   A string which indicates the treatment time at each silo. Control silos should be labelled with the treatment time `"control"`.
