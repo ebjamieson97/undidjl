@@ -263,4 +263,5 @@ plot_parallel_trends, folder("C:/Users/User/Documents/Files From Silos") outcome
 
 #### Undid Schematic 
 ![Diagram showing how difference-in-differences is computed with unpoolable data](./images/undid_schematic.png)
+![undidjl schematic](./images/undidjl_schematic.png)
 
