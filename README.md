@@ -191,7 +191,40 @@ RI p-value: .5
 
 #### 7. `plot_parallel_trends` - Plots trends figures.
 
+Combines all of the `trends_data_$silo_name.csv` files and uses this data to plot trends by silo or by treated/control status. 
 
+**Parameters:**
+
+- **folder** (*string, required*):  
+  A string specifying the filepath to the folder containing all of the `trends_data_$silo_name.csv`'s.
+  
+- **outcome_variable** (*string, required*):  
+  A string which is used as the title of plot.
+
+- **silos** (*string, optional*):  
+  A string which confines the plotting to the specified silos. 
+
+- **save_csv** (*string, optional*):  
+  A string (either `"true"` or `"false"`) which determines whether or not to save the `combined_trends_data.csv`. Defaults to `"true"`.
+
+- **covariates** (*string, optional*):  
+  A string (either `"true"` or `"false"`) which whether to plot the mean outcome or the mean outcome residualized by covariates. Defaults to `"false"` (plots the mean outcome). 
+
+- **omit_silos** (*string, optional*):  
+  A string which omits the specified silos from the plot.
+
+- **date_format** (*string, optional*):  
+  A string determining the format of the dates to appear on the x-axis of the plot. Options include:
+  - `"yearly"` or `"%tdCCYY"`
+  - `"monthly"` or `"%tdMonYY"`
+  - `"full_date"` or `"%tdDD-NN-CCYY"`
+  - `"day_and_month"` or `"%tdDDMon"`
+
+- **combine** (*string, optional*):  
+  A string (either `"true"` or `"false"`) which if set to `"true"` plots two lines: one line for the combined average across treated silos, and one line for the combined average across control silos. Otherwise plots every  silo individually. Defaults to "`false"`.
+
+- **step** (*integer, optional*):  
+  An integer for determining the number of periods between each date shown on the x-axis. Defaults to `1`. 
 
 ```stata
 plot_parallel_trends, folder("C:/Users/User/Documents/Files From Silos") outcome_variable("College Attendance") date_format("yearly")
@@ -203,7 +236,6 @@ plot_parallel_trends, folder("C:/Users/User/Documents/Files From Silos") outcome
 ![Parallel trends plot with silos combined as one control line and one treatment line](./images/silos46_58_71_73_combined.png)
 
 
-`plot_parallel_trends` takes in a filepath to the folder containing all of the trends_data_$silo_name.csv's as a string and returns timeseries plot of the variable of interest with either silos seperated or combined into a single treatment line and single control line. The *outcome_variable* argument is used to name the outcome variable that is being plotted and is used as the plot title. The *date_format* argument determines how the dates are shown along the x-axis (options are "yearly", "monthly", "day_and_month", or "full_date"). The *step* argument (defaults to 1) takes in an integer as is used to determine how many date labels should appear on the x-axis, if set to 3, for example, only every 3rd date from the dataset will be shown on the x-axis. The *silos* argument takes in a single string (e.g. "71 73") and restricts the plotting to only specified silos. Likewise the argument *omit_silos* takes in a single string (e.g. "58 46") and will omit those specified silos from the plotting. The argument *combine* can be set to "true" or "false" (defaults to "false") and if set to true takes the average at each date across treated vs control groups and then plots one line for the average across treated groups and one line for the average across control groups. Setting *save_csv* to "true" or "false" determines whether or not the combined_trends_data.csv should be saved or not (defaults to "true"). The dashed grey vertical lines on the parallel trends plot indicate treatment times. 
 
 ### Appendix
 
