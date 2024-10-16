@@ -3,6 +3,8 @@ This Stata package acts as a wrapper for the Julia package Undid.jl.
 
 undidjl allows for estimation of difference-in-differences with unpoolable data, see https://arxiv.org/abs/2403.15910 for more details.
 
+![undidjl schematic](./images/undidjl_schematic.png)
+
 ## Installation 
 ```stata
 net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidjl/main/")
@@ -17,9 +19,6 @@ net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidj
 * Julia 1.9.4 or later
 * Stata 14.1 or later
 * the julia package for Stata, see https://github.com/droodman/julia.ado
-
-## Schematic Overiew of undidjl
-![undidjl schematic](./images/undidjl_schematic.png)
 
 ## Utility Commands
 
