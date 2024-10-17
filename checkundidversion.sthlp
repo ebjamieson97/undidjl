@@ -16,7 +16,8 @@ undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
 {title:Examples}
 
 {pstd}
-{cmd:checkundidversion}
+{cmd:. checkundidversion}
+
 
 Currently installed version of Undid.jl is: 0.1.18
 
