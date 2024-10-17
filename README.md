@@ -98,7 +98,7 @@ C:/Users/User/Documents/Project Files/empty_diff_df.csv
 ```
 
 
-## Stage Two: Silo
+## Stage Two: Silos
 
 #### 5. `undidjl_stage_two` - Creates an two .csv files (filled_diff_df_$silo_name.csv and trends_data_$silo_name.csv), displays their filepaths, and returns one .csv's contents to the active Stata dataset.
 
