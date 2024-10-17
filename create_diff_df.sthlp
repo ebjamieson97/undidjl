@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.1.0 27aug2024}
+{* *! version 0.1.0 17oct2024}
 {help create_diff_df:create_diff_df}
 {hline}
 
@@ -13,10 +13,13 @@ undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
 {phang}
 {cmd:create_diff_df} creates the empty_diff_df.csv file which is to be sent to the seperate silos to be filled out. 
 
-The required arguments are: the filepath to the init.csv which should be inputed as a string with forward slashes; the date_format which should be inputed as a string 
-such as ["yyyy/mm/dd", "yyyy-mm-dd", "yyyymmdd", "yyyy/dd/mm", "yyyy-dd-mm", "yyyyddmm", "dd/mm/yyyy", "dd-mm-yyyy", "ddmmyyyy", "mm/dd/yyyy", 
-"mm-dd-yyyy", "mmddyyyy", "mm/yyyy", "mm-yyyy", "mmyyyy", "yyyy", "ddmonyyyy", "yyyym00"] and accurately reflect the format of the dates stored in init.csv; the freq of data
-which should be inputed as either "daily", "weekly", "monthly", or "yearly".
+Required parameters:
+- {it:filepath} : A string specifying the filepath to the init.csv
+- {it:date_format} : A string which specifies the date format used in the init.csv ("yyyy/mm/dd", "yyyy-mm-dd", "yyyymmdd", "yyyy/dd/mm", "yyyy-dd-mm", "yyyyddmm", "dd/mm/yyyy", "dd-mm-yyyy", "ddmmyyyy", "mm/dd/yyyy", "mm-dd-yyyy", "mmddyyyy", "mm/yyyy", "mm-yyyy", "mmyyyy", "yyyy", "ddmonyyyy", "yyyym00")
+- {it:freq} : A string which indicates the length of the time periods to be used when computing the differences in mean outcomes between periods at each silo. Either "daily", "weekly", "monthly", or "yearly".
+
+Optional parameters:
+
 
 If no covariates are specified in the init.csv you can specify them when calling create_diff_df by specifying them as a single string (e.g. covariates("asian black male")). 
 freq_multiplier can optionally be set as some non-zero integer. 
