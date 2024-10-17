@@ -1,12 +1,13 @@
 {smcl}
-{* *! version 0.1.2 29aug2024}
+{* *! version 0.1.2 17oct2024}
 {help checkundidversion:checkundidversion}
 {hline}
 
 {title:undidjl}
 
 {pstd}
-undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
+undidjl - Stata wrapper for the Undid.jl Julia package. Estimate difference-in-differences with unpoolable data.
+{p_end}
 
 {title:Command Description}
 
@@ -16,7 +17,7 @@ undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
 {title:Examples}
 
 {pstd}
-{cmd:. checkundidversion}
+{cmd:checkundidversion}
 
 
 Currently installed version of Undid.jl is: 0.1.18
