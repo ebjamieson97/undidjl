@@ -11,7 +11,7 @@ undidjl - Stata wrapper for the Undid.jl Julia package. Estimate difference-in-d
 {title:Command Description}
 
 {phang}
-{cmd:create_diff_df} creates the empty_diff_df.csv file which is to be sent to the seperate silos to be filled out. 
+{cmd:create_diff_df} creates the empty_diff_df.csv file which is to be sent to the various silos to be filled out. 
 
 Required parameters:
 - {bf:filepath} : A string specifying the filepath to the init.csv
