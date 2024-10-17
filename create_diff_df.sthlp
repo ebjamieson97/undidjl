@@ -6,7 +6,7 @@
 {title:undidjl}
 
 {pstd}
-undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
+undidjl - Stata wrapper for the Undid.jl Julia package. Estimate difference-in-differences with unpoolable data. {p_end}
 
 {title:Command Description}
 
