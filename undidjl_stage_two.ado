@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_two*/
 /*written by Eric Jamieson */
-/*version 0.1.6 2024-10-21 */
+/*version 0.1.7 2024-10-21 */
 /*------------------------------------*/
 version 14.1
 
@@ -10,6 +10,7 @@ program define undidjl_stage_two
 
 	syntax , filepath(string) local_silo_name(string) time_column(string) outcome_column(string) local_date_format(string) [consider_covariates(string) view_dataframe(string)]
 	
+    keep `time_column' `outcome_column'
 	
     // Check for missing values in the time column
     quietly count if missing(`time_column')
@@ -110,3 +111,4 @@ end
 *0.1.4 - convert numerical columns to Float64, so long as there are no missing values in column
 *0.1.5 - converts any backslashes to forward slashes for better compatability between Julia and Stata
 *0.1.6 - add warning for missing values in time or outcome variables
+*0.1.7 - drop superfluous variables
