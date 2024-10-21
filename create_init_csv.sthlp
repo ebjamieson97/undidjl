@@ -1,23 +1,31 @@
 {smcl}
-{* *! version 0.1.4 05sep2024}
+{* *! version 0.1.4 21oct2024}
 {help create_init_csv:create_init_csv}
 {hline}
 
 {title:undidjl}
 
 {pstd}
-undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
+undidjl - Stata wrapper for the Undid.jl Julia package. Estimate difference-in-differences with unpoolable data. {p_end}
 
 {title:Command Description}
 
 {phang}
-{cmd:create_init_csv} creates the init.csv file required to build the empty_diff table which itself is sent to the seperate silos to be filled out. 
-{cmd:create_init_csv} can be called with or without optional arguments. Arguments must be passed as strings seperated by spaces and dates must be formatted identically.
-Acceptable date formats are given by: ["yyyy/mm/dd", "yyyy-mm-dd", "yyyymmdd", "yyyy/dd/mm", "yyyy-dd-mm", "yyyyddmm", "dd/mm/yyyy", "dd-mm-yyyy", "ddmmyyyy", "mm/dd/yyyy", 
-"mm-dd-yyyy", "mmddyyyy", "mm/yyyy", "mm-yyyy", "mmyyyy", "yyyy", "ddmonyyyy", "yyyym00"]. Control silos should indicate "control" under the argument treatment_times as shown in the example.
-silo_names, start_times, end_times, and treatment_times should all have the same number of entries. Covariates may have zero to n entries. 
+{cmd:create_init_csv} Creates an initial .csv file (init.csv), displays its filepath, and returns its contents to the active Stata dataset.
 
-It is recommended to simply call create_init_csv and then fill out the information as needed directly from the init.csv if there are many silos to consider. 
+Required parameters:
+- none
+
+Optional parameters:
+- {bf:silo_names} : A string specifying the different silo names.
+
+- {bf:start_times} : A string which indicates the starting time for the analysis at each silo.
+
+- {bf:end_times} : A string which indicates the end time for the analysis at each silo.
+
+- {bf:treatment_times} : A string which indicates the treatment time at each silo. Control silos should be labelled with the treatment time "control".
+
+- {bf:covariates} : A string specifying covariates to be considered at each silo.
 
 {title:Syntax}
 
@@ -45,4 +53,4 @@ For more information about Undid.jl, visit the {browse "https://github.com/ebjam
 {title:Citation}
 
 {pstd}
-Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data.{p_end}
+Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data. {browse "https://arxiv.org/abs/2403.15910"} {p_end}
