@@ -1,26 +1,39 @@
 {smcl}
-{* *! version 0.1.1 29aug2024}
+{* *! version 0.1.5 21oct2024}
 {help undidjl_stage_two:undidjl_stage_two}
 {hline}
 
 {title:undidjl}
 
 {pstd}
-undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
+undidjl - Stata wrapper for the Undid.jl Julia package. Estimate difference-in-differences with unpoolable data. {p_end}
 
 {title:Command Description}
 
 {phang}
-{cmd:undidjl_stage_two} reads in information from the empty_diff_df.csv file and from the active dataset in Stata. Produces filled_diff_$local_silo_name.csv and trends_data_$local_silo_name.csv. 
+{cmd:undidjl_stage_two} creates an two .csv files (filled_diff_df_$silo_name.csv and trends_data_$silo_name.csv), 
+displays their filepaths, and returns one .csv's contents to the active Stata dataset.
 
-The required arguments are: the filepath(string) to the empty_diff_df.csv file; the corresponding name of the local silo as it is written in the empty_diff_df.csv, local_silo_name(string); the name of the column
-where the date/time data is stored in the active dataset in Stata, time_column(string); the name of the column where the data of the outcome of interest is stored in the active dataset in Stata, outcome_column(string); 
-and finally, the local_date_format(string) of the date/time data in the active dataset in Stata. The valid options for the local_date_format(string) are ["yyyy/mm/dd", "yyyy-mm-dd", "yyyymmdd", "yyyy/dd/mm", "yyyy-dd-mm",
-"yyyyddmm", "dd/mm/yyyy", "dd-mm-yyyy", "ddmmyyyy", "mm/dd/yyyy", "mm-dd-yyyy", "mmddyyyy", "mm/yyyy", "mm-yyyy", "mmyyyy", "yyyy", "ddmonyyyy", "yyyym00"].
+Required parameters: 
+- {bf:filepath} : A string specifying the filepath to the empty_diff_df.csv.
 
-Optional arguments (have not been added yet) are columns_to_rename(string) and rename_to(string). Columns should be listed as a single string with seperate column names seperated by a space. Likewise rename_to(string) takes 
-in a single string with the corresponding new names for the columns. Any covariates in the local silo should be renamed to match the covariates as they are named in the empty_diff_df.csv. Otherwise, it is also possible to 
-specify consider_covariates("false") as an optional argument which will then run stage two procedures while ignoring any calculations involving any covariates.
+- {bf:local_silo_name} : A string which specifies the local silo's name as it is written in the empty_diff_df.csv.
+
+- {bf:time_column} : A string which indicates the name of the variable in the local silo data which contains the date information. 
+This variable should be a string.
+
+- {bf:outcome_column} : A string specifying the name of the variable in the local silo data which contains the outcome of interest.
+
+- {bf:local_date_format} : A string specifying the date format used in the time_column variable. Valid formats include:
+("yyyy/mm/dd", "yyyy-mm-dd", "yyyymmdd", "yyyy/dd/mm", "yyyy-dd-mm", "yyyyddmm", "dd/mm/yyyy", "dd-mm-yyyy", "ddmmyyyy", "mm/dd/yyyy", 
+"mm-dd-yyyy", "mmddyyyy", "mm/yyyy", "mm-yyyy", "mmyyyy", "yyyy", "ddmonyyyy", "yyyym00")
+
+Optional parameters:
+- {bf:consider_covariates} : A string which if set to "false" ignores computations involving the covariates specified in the empty_diff_df.csv. 
+Defaults to "true".
+
+- {bf:view_dataframe} : Specify which dataframe should be passed back to Stata's active dataset. Either "trends" or "diff". Defaults to "diff".
+
 
 {title:Syntax}
 
@@ -45,9 +58,9 @@ specify consider_covariates("false") as an optional argument which will then run
 Eric Jamieson{p_end}
 
 {pstd}
-For more information about Undid.jl, visit the {browse "https://github.com/ebjamieson97/undidjl"} GitHub repository.{p_end}
+For more information about undidjl, visit the {browse "https://github.com/ebjamieson97/undidjl"} GitHub repository.{p_end}
 
 {title:Citation}
 
 {pstd}
-Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data.{p_end}
+Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data. {browse "https://arxiv.org/abs/2403.15910"} {p_end}
