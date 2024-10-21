@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_two*/
 /*written by Eric Jamieson */
-/*version 0.1.5 2024-09-06 */
+/*version 0.1.6 2024-10-21 */
 /*------------------------------------*/
 version 14.1
 
@@ -9,6 +9,21 @@ cap program drop undidjl_stage_two
 program define undidjl_stage_two
 
 	syntax , filepath(string) local_silo_name(string) time_column(string) outcome_column(string) local_date_format(string) [consider_covariates(string) view_dataframe(string)]
+	
+	
+    // Check for missing values in the time column
+    quietly count if missing(`time_column')
+    if r(N) > 0 {
+        display as error "Error: Missing values found in time variable: `time_column'."
+        exit 198
+    }
+
+    // Check for missing values in the outcome column
+    quietly count if missing(`outcome_column')
+    if r(N) > 0 {
+        display as error "Error: Missing values found in outcome variable: `outcome_column'."
+        exit 198
+    }
 	
 	// Declare usage of Undid and start up Julia
 	jl: using Undid
@@ -94,3 +109,4 @@ end
 *0.1.3 - fixed several typos, forget to close some brackets
 *0.1.4 - convert numerical columns to Float64, so long as there are no missing values in column
 *0.1.5 - converts any backslashes to forward slashes for better compatability between Julia and Stata
+*0.1.6 - add warning for missing values in time or outcome variables
