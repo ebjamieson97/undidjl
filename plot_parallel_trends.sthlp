@@ -1,32 +1,44 @@
 {smcl}
-{* *! version 0.1.0 04sep2024}
+{* *! version 0.1.0 21oct2024}
 {help checkundidversion:checkundidversion}
 {hline}
 
 {title:undidjl}
 
 {pstd}
-undidjl - Stata wrapper for the Undid.jl Julia package.{p_end}
+undidjl - Stata wrapper for the Undid.jl Julia package. Estimate difference-in-differences with unpoolable data. {p_end}
 
 {title:Command Description}
 
 {phang}
 {cmd:plot_parallel_trends} plots parallel trends figures.
 
-The required arguments are: folder(string) which takes in a filepath to folder where all of the trends_data_$silo_name.csv files are stored; outcome_variable(string)
-which takes in a name of the outcome variable which will be used in the plot title; and date_format(string) which can be set to "yearly", "monthly", "day_and_month", or "full_date",
-and is used to determine how the dates are displayed along the x-axis of the plot. 
+Required parameters:
+- {bf:folder} :  A string specifying the filepath to the folder containing all of the trends_data_$silo_name.csv's.
 
-The optional arguments are: 
-- silos(string) which allows for inputting silo names for which you would like to restrict the plotting to. Silos should be all be entered as one string with spaces between them.
-- omit_silos(string) which allows for inputting silo names that you would like to be disregarded for the plotting. Silos should be all be entered as one string with spaces between them.
-- covariates(string) which can be set to true or false. When set to true the mean outcome variable residualized by covariates is plotted, and when set to false
-the mean outcome variable is plotted. False by default.
-- combine(string) can be set to true or false. When set to true it plots the average of the mean outcome variable (residualized by covariates if covariates(string) is set to true)
-across treatment & control groups, respectively. False by default.
-- step(numlist int max=1) which takes in an integer value but is 1 by default. This determines how many dates are shown along the x-axis. 1 means that every date will be shown,
-2 would display every 2nd date, 3 would display every 3rd date, and so on.
--save_csv(string) can be set to true or false. Saves the combined_trends_data as a .csv file is set to true. True by default. 
+- {bf:outcome_variable" : A string which is used as the title of plot. 
+
+Optional parameters:
+- {bf:silos} : A string which confines the plotting to the specified silos.
+
+- {bf:save_csv} : A string (either "true" or "false") which determines whether or not to save the combined_trends_data.csv. Defaults to "true".
+
+- {bf:covariates} : A string (either "true" or "false") which determines whether to plot the mean outcome or 
+the mean outcome residualized by covariates. Defaults to "false" (plots the mean outcome).
+
+- {bf:omit_silos} : A string which omits the specified silos from the plot.
+
+- {bf:date_format} : A string determining the format of the dates to appear on the x-axis of the plot. Options include:
+    -> "yearly" or "%tdCCYY"
+    -> "monthly" or "%tdMonYY"
+    -> "full_date" or "%tdDD-NN-CCYY"
+    -> "day_and_month" or "%tdDDMon"
+
+- {bf:combine} : A string (either "true" or "false") which if set to "true" plots two lines: one line for the combined average across treated silos, 
+and one line for the combined average across control silos. Otherwise plots every silo individually. Defaults to "false".
+
+- {bf:step} : An integer for determining the number of periods between each date shown on the x-axis. Defaults to 1.
+
 
 {title:Syntax}
 
@@ -48,4 +60,4 @@ For more information about Undid.jl, visit the {browse "https://github.com/ebjam
 {title:Citation}
 
 {pstd}
-Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data. {p_end}
+Please cite: Sunny Karim, Matthew D. Webb, Nichole Austin, Erin Strumpf. 2024. Difference-in-Differenecs with Unpoolable Data. {browse "https://arxiv.org/abs/2403.15910"} {p_end}
