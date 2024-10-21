@@ -48,7 +48,7 @@ For example, if the time periods to consider are two years, set freq("yearly") f
 Eric Jamieson{p_end}
 
 {pstd}
-For more information about Undid.jl, visit the {browse "https://github.com/ebjamieson97/undidjl"} GitHub repository.{p_end}
+For more information about undidjl, visit the {browse "https://github.com/ebjamieson97/undidjl"} GitHub repository.{p_end}
 
 {title:Citation}
 
