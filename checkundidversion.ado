@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*checkundidversion*/
 /*written by Eric Jamieson */
-/*version 0.1.2 2024-08-29 */
+/*version 0.1.3 2024-10-23 */
 /*------------------------------------*/
 version 14.1
 
@@ -37,7 +37,8 @@ program define checkundidversion
 		file_content = read(content, String); ///
 		start_pos = findfirst("version = ", file_content); ///
 		start = start_pos[end]; /// 
-		newest_version = file_content[start+2:start+8]; ///
+		num = 7; ///
+		newest_version = file_content[start+2:start+num]; ///
 		st_global("newest_version", newest_version); ///
 	catch e ///
 		println("An error occurred: ", e); ///
@@ -57,3 +58,4 @@ end
 *0.1.0 - changed results to disp as result 
 *0.1.1 - added script to get latest version of Undid.jl from the associated .toml file
 *0.1.2 - fixed indexing from start+6 to start+8
+*0.1.3 - fixed indexing from start+6 to start+7
