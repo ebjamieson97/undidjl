@@ -175,6 +175,9 @@ If errors persist, check to see if there are missing values of `diff_estimates` 
 - **interpolation** (*string, optional*):  
   A string (either `"false"` or `"linear_function"`) which specifies which, if any, method of interpolation/extrapolation for missing values of `diff_estimate` or `diff_estimate_covariates` should be used. Defaults to `"false"`. There must be at least one value for the (silo,g) group for which a missing value is being estimated in order for `"linear_function"` interpolation to work.
 
+- **weights** (*string, optional*):
+  A string (either "true" or "false") which determines whether or not the weights should be used in the case of common adoption. Defaults to "true".
+
 ```stata
 . undidjl_stage_three, folder("C:/Users/User/Documents/Files From Silos") agg("g") covariates("true")
 
