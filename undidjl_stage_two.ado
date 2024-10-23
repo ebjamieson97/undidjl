@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_two*/
 /*written by Eric Jamieson */
-/*version 0.1.7 2024-10-21 */
+/*version 0.1.8 2024-10-23 */
 /*------------------------------------*/
 version 14.1
 
@@ -10,9 +10,9 @@ program define undidjl_stage_two
 
 	syntax , filepath(string) local_silo_name(string) time_column(string) outcome_column(string) local_date_format(string) [consider_covariates(string) view_dataframe(string)]
 	
-    keep `time_column' `outcome_column'
+	keep `time_column' `outcome_column'
 	
-    // Check for missing values in the time column
+	// Check for missing values in the time column
     quietly count if missing(`time_column')
     if r(N) > 0 {
         display as error "Error: Missing values found in time variable: `time_column'."
@@ -63,7 +63,9 @@ program define undidjl_stage_two
 	// Parse dataframe(string)
     if "`view_dataframe'" == "" | "`view_dataframe'" == "diff" {
         qui jl: diff_df = string.(outputs[1][2])
-		qui jl: rename!(diff_df, Symbol("(g;t)") => :gt)
+		qui jl: if "(g;t)" in DataFrames.names(diff_df) ///
+				rename!(diff_df, Symbol("(g;t)") => :gt); ///
+		end
 		qui jl: if !any(x -> x == "missing", diff_df.diff_estimate) ///
 					diff_df.diff_estimate = parse.(Float64, diff_df.diff_estimate); ///
 				end
@@ -112,3 +114,4 @@ end
 *0.1.5 - converts any backslashes to forward slashes for better compatability between Julia and Stata
 *0.1.6 - add warning for missing values in time or outcome variables
 *0.1.7 - drop superfluous variables
+*0.1.8 - renames (g;t) only if it exists (only for staggered adoption)
