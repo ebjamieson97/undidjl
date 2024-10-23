@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.1.2 17oct2024}
+{* *! version 0.1.3 23oct2024}
 {help checkundidversion:checkundidversion}
 {hline}
 
