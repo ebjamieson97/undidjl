@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_three*/
 /*written by Eric Jamieson */
-/*version 0.1.4 2024-10-10 */
+/*version 0.2.0 2024-10-23 */
 /*------------------------------------*/
 version 14.1
 
@@ -9,7 +9,7 @@ version 14.1
 cap program drop undidjl_stage_three
 program define undidjl_stage_three
 
-	syntax , folder(string) [agg(string) covariates(string) save_csv(string) interpolation(string)]
+	syntax , folder(string) [agg(string) covariates(string) save_csv(string) interpolation(string) weights(string)]
 	
 	// Declare usage of Undid and start up Julia
 	jl: using Undid
@@ -65,8 +65,19 @@ program define undidjl_stage_three
 	else{
 		display as error "Error: currently the only supported options for interpolation and extrapolation for missing diff_estimates are: linear_function"
 	}
+	
+	// Parse weights
+	if "`weights'" == "" | "`weights'" == "true" | "`weights'" == "True" | "`weights'" == "TRUE" | "`weights'" == "T" | "`weights'" == "on" | "`weights'" == "ON" | "`weights'" == "On" {
+		qui jl: weights = true
+	}
+	else if "`weights'" == "FALSE" | "`weights'" == "F" | "`weights'" == "false" | "`weights'" == "False" | "`weights'" == "off" | "`weights'" == "OFF" | "`weights'" == "Off" {
+		qui jl: weights = false
+	}
+	else { 
+		di as error `"Please set weights to either "true" or "false"."'
+	}
 		
-	qui jl: results = run_stage_three("$folder", agg = agg, covariates = covariates, save_all_csvs = save_all_csvs, interpolation = interpolation)
+	qui jl: results = run_stage_three("$folder", agg = agg, covariates = covariates, save_all_csvs = save_all_csvs, interpolation = interpolation, weights = weights)
 	
 	qui jl: if "ATT_g" in DataFrames.names(results) ///
 				results.ATT_g = Float64.(results.ATT_g); ///
@@ -212,3 +223,4 @@ end
 *0.1.2 - display filepaths for saved .csv files
 *0.1.3 - backslashes to forwardslashes fixes Julia-Stata compatability issue
 *0.1.4 - added p-values and output displays
+*0.2.0 - added weights parameter
