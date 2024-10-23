@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.1.0 17oct2024}
+{* *! version 0.2.1 23oct2024}
 {help create_diff_df:create_diff_df}
 {hline}
 
