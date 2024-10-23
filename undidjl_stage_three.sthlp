@@ -1,5 +1,5 @@
 {smcl}
-{* *! version 0.1.4 21oct2024}
+{* *! version 0.2.0 23oct2024}
 {help undidjl_stage_three:undidjl_stage_three}
 {hline}
 
@@ -25,9 +25,11 @@ column when computing the aggregate ATT. Defaults to "false".
 
 - {bf:save_csv} : A string (either "true" or "false") which determines whether or not to save the combined_diff_data.csv. Defaults to "true".
 
-- {bf:interpolation:} : A string (either "false" or "linear_function") which specifies which, if any, method of interpolation/extrapolation for missing values
+- {bf:interpolation} : A string (either "false" or "linear_function") which specifies which, if any, method of interpolation/extrapolation for missing values
 of diff_estimate or diff_estimate_covariates should be used. Defaults to "false". There must be at least one value for the (silo,g) group for which a missing value
 is being estimated in order for "linear_function" interpolation to work.
+
+- {bf:weights} : A string (either "true" or "false") which determines whether or not the weights should be used in the case of common adoption. Defaults "true".
 
 
 {title:Syntax}
