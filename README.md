@@ -92,7 +92,7 @@ Creates the `empty_diff_df.csv` which lists all of the differences that need to 
 
 - **weights** (*string, optional*):
   A string indicating the type of weighting to use in the case of common adoption. Defaults to "standard". Options are:
-  - "standard" weighs each silo according to ((num of obs post-treatment) / (num of obs)) 
+  - "standard" weighs each silo according to (num of obs after and at the treatment period) / (num of obs)
 
 ```stata
 . create_diff_df, filepath("C:/Users/User/Documents/Project Files/init.csv") date_format("yyyy") freq("yearly")
