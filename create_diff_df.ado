@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_diff_df*/
 /*written by Eric Jamieson */
-/*version 0.2.0 2024-10-23 */
+/*version 0.2.1 2024-10-23 */
 /*------------------------------------*/
 version 14.1
 
@@ -54,9 +54,13 @@ program define create_diff_df
 	}
 	
 	qui jl: outputs = create_diff_df("$filepath", covariates = covariates, date_format = "$date_format", freq = "$freq", freq_multiplier = freq_multiplier, weights = weights)
+
 	qui jl: filepath = outputs[1]
 	qui jl: empty_diff_df = string.(outputs[2])
-	qui jl: rename!(empty_diff_df, Symbol("(g;t)") => :gt)
+	qui jl: using DataFrames
+	qui jl: if "(g;t)" in DataFrames.names(empty_diff_df) ///
+				rename!(empty_diff_df, Symbol("(g;t)") => :gt); ///
+			end
 
 	// Return the filepath to Stata
 	qui jl: st_global("filepath", filepath)	
@@ -74,3 +78,4 @@ end
 *0.1.2 - Stata can't handle (g;t) name for column so renamed to gt
 *0.1.3 - converts and backslashes to forwardslashes for better compatability between Julia and Stata
 *0.2.0 - added option for weights, removed confine_matching
+*0.2.1 - renames (g;t) only if it exists (only for staggered adoption)
