@@ -90,6 +90,10 @@ Creates the `empty_diff_df.csv` which lists all of the differences that need to 
 - **freq_multiplier** (*integer or string, optional*):  
   Specify if the frequency should be multiplied by a non-zero integer. For example, if the time periods to consider are two years, set `freq("yearly") freq_multiplier(2)`.
 
+- **weights** (*string, optional*):
+  A string indicating the type of weighting to use in the case of common adoption. Defaults to "standard". Options are:
+  - "standard" weighs each silo according to ((num of obs post-treatment) / (num of obs)) 
+
 ```stata
 . create_diff_df, filepath("C:/Users/User/Documents/Project Files/init.csv") date_format("yyyy") freq("yearly")
 
