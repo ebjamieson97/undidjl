@@ -31,7 +31,7 @@ Optional parameters:
 For example, if the time periods to consider are two years, set freq("yearly") freq_multiplier(2)
 
 - {bf:weights} : A string indicating the type of weighting to use in the case of common adoption. Defaults to "standard". Options are:
-    -> "standard" weighs each silo according to ((num of obs post-treatment) / (num of obs))
+    -> "standard" weighs each silo according to (num of obs after and at the treatment period) / (num of obs)
 
 
 {title:Syntax}
