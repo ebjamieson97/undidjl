@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_three*/
 /*written by Eric Jamieson */
-/*version 0.2.0 2024-10-23 */
+/*version 0.3.0 2024-10-23 */
 /*------------------------------------*/
 version 14.1
 
@@ -100,21 +100,21 @@ program define undidjl_stage_three
 	
 	qui capture confirm variable treatment_time
 	qui if _rc == 0 {
-		qui capture confirm variable jackknife_SE 
+		qui capture confirm variable dof
 		qui if _rc == 0 {
-			local num_obs = num_silos
-			drop num_silos
+			local deg_freedom = dof
+			drop dof
 		}
 	}
 	
 	qui capture confirm variable jackknife_SE
 	qui if _rc == 0 {
 		local t_val = agg_ATT / jackknife_SE
-		if "`num_obs'" == "" {
-			local num_obs = _N
+		if "`deg_freedom'" == "" {
+			local deg_freedom = _N - 1
 		}
 		gen p_value_jackknife = .
-		replace p_value_jackknife = 2*ttail(`num_obs'-1, abs(`t_val')) if !missing(jackknife_SE)
+		replace p_value_jackknife = 2*ttail(`deg_freedom', abs(`t_val')) if !missing(jackknife_SE)
 		order p_value_jackknife, after(jackknife_SE)
 	}
 	
@@ -224,3 +224,4 @@ end
 *0.1.3 - backslashes to forwardslashes fixes Julia-Stata compatability issue
 *0.1.4 - added p-values and output displays
 *0.2.0 - added weights parameter
+*0.3.0 - added computation of jackknife p -value for common treatment with silos >= 3
