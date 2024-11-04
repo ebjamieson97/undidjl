@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_three*/
 /*written by Eric Jamieson */
-/*version 0.3.0 2024-10-23 */
+/*version 0.4.0 2024-11-04 */
 /*------------------------------------*/
 version 14.1
 
@@ -78,21 +78,27 @@ program define undidjl_stage_three
 	}
 		
 	qui jl: results = run_stage_three("$folder", agg = agg, covariates = covariates, save_all_csvs = save_all_csvs, interpolation = interpolation, weights = weights)
-	
-	qui jl: if "ATT_g" in DataFrames.names(results) ///
-				results.ATT_g = Float64.(results.ATT_g); ///
-			end 
-			
-	qui jl: if "ATT_s" in DataFrames.names(results) ///
-				results.ATT_s = Float64.(results.ATT_s); ///
-			end 
-			
-	qui jl: if "ATT_gt" in DataFrames.names(results) ///
-				results.ATT_gt = Float64.(results.ATT_gt); ///
-			end 
 			
 	qui jl: if "treatment_time" in DataFrames.names(results) ///
 				results.treatment_time = string.(results.treatment_time); ///
+			end
+	qui jl: if "silo_n" in DataFrames.names(results) /// 
+				rename!(results, :silo_n => :n_obs); ///
+				results.ATT_subset = results.ATT_s; ///
+				results.ATT_subset_se = results.ATT_s_se; ///
+				results.ATT_subset_se_jack = results.ATT_s_se_jackknife; ///
+			end
+	qui jl: if "gt_n" in DataFrames.names(results) /// 
+				rename!(results, :gt_n => :n_obs); ///
+				results.ATT_subset = results.ATT_gt; ///
+				results.ATT_subset_se = results.ATT_gt_se; ///
+				results.ATT_subset_se_jack = results.ATT_gt_se_jackknife; ///
+			end
+	qui jl: if "g_n" in DataFrames.names(results) /// 
+				rename!(results, :g_n => :n_obs); ///
+				results.ATT_subset = results.ATT_g; ///
+				results.ATT_subset_se = results.ATT_g_se; ///
+				results.ATT_subset_se_jack = results.ATT_g_se_jackknife; ///
 			end 
 			
 	
@@ -107,6 +113,21 @@ program define undidjl_stage_three
 		}
 	}
 	
+	qui capture confirm variable n_obs 
+	qui if _rc == 0 {
+		gen p_value_subset = .
+		gen p_value_subset_jack = .
+		forvalues i = 1/`=_N' {
+			local t_value = ATT_subset[`i'] / ATT_subset_se[`i']
+			local df = n_obs[`i'] - 1
+			replace p_value_subset = 2 * ttail(`df', abs(`t_value')) in `i'
+			
+			local t_value_jack = ATT_subset[`i'] / ATT_subset_se_jack[`i']
+			replace p_value_subset_jack = 2 * ttail(`df', abs(`t_value_jack')) in `i'
+			
+		}
+	}
+	
 	qui capture confirm variable jackknife_SE
 	qui if _rc == 0 {
 		local t_val = agg_ATT / jackknife_SE
@@ -117,6 +138,16 @@ program define undidjl_stage_three
 		replace p_value_jackknife = 2*ttail(`deg_freedom', abs(`t_val')) if !missing(jackknife_SE)
 		order p_value_jackknife, after(jackknife_SE)
 	}
+	
+
+	local t_val = agg_ATT / agg_ATT_se
+	if "`deg_freedom'" == "" {
+		local deg_freedom = _N - 1
+	}
+	gen p_value = .
+	replace p_value = 2*ttail(`deg_freedom', abs(`t_val')) if !missing(agg_ATT_se)
+	order p_value, after(agg_ATT_se)
+
 	
 	
 	
@@ -129,18 +160,20 @@ program define undidjl_stage_three
 	qui capture confirm variable ATT_s
 	if _rc == 0 & `condition_met' == 0 {
 		local condition_met 1
-		di as text "------------------------------------------------------"
-		di as text "                     UNDID Results                    "
-		di as text "------------------------------------------------------"
-		di as text "Silo                      | " as text "ATT                      |"
-		di as text "--------------------------|--------------------------|"
+		di as text "-------------------------------------------------------------------------------------------"
+		di as text "                                       UNDID Results                    "
+		di as text "-------------------------------------------------------------------------------------------"
+		di as text "Silo                      | " as text "ATT             | SE     | p-val  | JKNIFE SE  | JKNIFE p-val |"
+		di as text "--------------------------|-----------------|--------|--------|------------|--------------|"
 		forvalues i = 1/`N' {
-			di as text %-25s "`=silos[`i']'" as text " |" as result %-25.7f ATT_s[`i'] as text " |"
+			di as text %-25s "`=silos[`i']'" as text " |" as result %-16.7f ATT_s[`i'] as text " | " as result  %-7.3f ATT_subset_se[`i'] as text "| " as result %-7.3f p_value_subset[`i'] as text "| " as result  %-11.3f ATT_subset_se_jack[`i'] as text "| " as result %-13.3f p_value_subset_jack[`i'] as text "|"
     
-			di as text "--------------------------|--------------------------|"
+			di as text "--------------------------|-----------------|--------|--------|------------|--------------|"
 		}
 		di as text "Aggregation: " as result "silo"
 		di as text "Aggregate ATT: " as result agg_ATT[1]
+		di as text "Standard error: " as result agg_ATT_se[1]
+		di as text "p-value: " as result p_value[1]
 		di as text "Jackknife SE: " as result jackknife_SE[1]
 		di as text "Jackknife p-value: " as result p_value_jackknife[1]
 		di as text "RI p-value: " as result p_value_RI[1]
@@ -149,18 +182,20 @@ program define undidjl_stage_three
 	qui capture confirm variable ATT_gt
 	if _rc == 0 & `condition_met' == 0 {
 		local condition_met 1
-		di as text "------------------------------------------------------"
-		di as text "                     UNDID Results                    "
-		di as text "------------------------------------------------------"
-		di as text "(g,t)                     | " as text "ATT                      |"
-		di as text "--------------------------|--------------------------|"
+		di as text "-------------------------------------------------------------------------------------------"
+		di as text "                                       UNDID Results                    "
+		di as text "-------------------------------------------------------------------------------------------"
+		di as text "(g,t)                     | " as text "ATT             | SE     | p-val  | JKNIFE SE  | JKNIFE p-val |"
+			di as text "--------------------------|-----------------|--------|--------|------------|--------------|"
 		forvalues i = 1/`N' {
-			di as text %-25s "`=gt[`i']'" as text " |" as result %-25.7f ATT_gt[`i'] as text " |"
+			di as text %-25s "`=gt[`i']'" as text " |" as result %-16.7f ATT_gt[`i'] as text " | " as result  %-7.3f ATT_subset_se[`i'] as text "| " as result %-7.3f p_value_subset[`i'] as text "| " as result  %-11.3f ATT_subset_se_jack[`i'] as text "| " as result %-13.3f p_value_subset_jack[`i'] as text "|"
     
-			di as text "--------------------------|--------------------------|"
+			di as text "--------------------------|-----------------|--------|--------|------------|--------------|"
 		}
 		di as text "Aggregation: " as result "gt"
 		di as text "Aggregate ATT: " as result agg_ATT[1]
+		di as text "Standard error: " as result agg_ATT_se[1]
+		di as text "p-value: " as result p_value[1]
 		di as text "Jackknife SE: " as result jackknife_SE[1]
 		di as text "Jackknife p-value: " as result p_value_jackknife[1]
 		di as text "RI p-value: " as result p_value_RI[1]
@@ -169,18 +204,20 @@ program define undidjl_stage_three
 	qui capture confirm variable ATT_g
 	if _rc == 0 & `condition_met' == 0 {
 		local condition_met 1
-		di as text "------------------------------------------------------"
-		di as text "                     UNDID Results                    "
-		di as text "------------------------------------------------------"
-		di as text "g                         | " as text "ATT                      |"
-		di as text "--------------------------|--------------------------|"
+		di as text "-------------------------------------------------------------------------------------------"
+		di as text "                                       UNDID Results                    "
+		di as text "-------------------------------------------------------------------------------------------"
+		di as text "g                         | " as text "ATT             | SE     | p-val  | JKNIFE SE  | JKNIFE p-val |"
+		di as text "--------------------------|-----------------|--------|--------|------------|--------------|"
 		forvalues i = 1/`N' {
-			di as text %-25s "`=g[`i']'" as text " |" as result %-25.7f ATT_g[`i'] as text " |"
+			di as text %-25s "`=g[`i']'" as text " |" as result %-16.7f ATT_g[`i'] as text " | " as result  %-7.3f ATT_subset_se[`i'] as text "| " as result %-7.3f p_value_subset[`i'] as text "| " as result  %-11.3f ATT_subset_se_jack[`i'] as text "| " as result %-13.3f p_value_subset_jack[`i'] as text "|"
     
-			di as text "--------------------------|--------------------------|"
+			di as text "--------------------------|-----------------|--------|--------|------------|--------------|"
 		}
 		di as text "Aggregation: " as result "g"
 		di as text "Aggregate ATT: " as result agg_ATT[1]
+		di as text "Standard error: " as result agg_ATT_se[1]
+		di as text "p-value: " as result p_value[1]
 		di as text "Jackknife SE: " as result jackknife_SE[1]
 		di as text "Jackknife p-value: " as result p_value_jackknife[1]
 		di as text "RI p-value: " as result p_value_RI[1]
@@ -195,6 +232,11 @@ program define undidjl_stage_three
 		di as text "Common Treatment Time: " as result treatment_time[1]
 		di as text "------------------------------------------------------"
 		di as text "Aggregate ATT: " as result agg_ATT[1]
+		qui capture confirm variable agg_ATT_se
+		if _rc == 0 {
+			di as text "Standard error: " as result agg_ATT_se[1]
+			di as text "p-value: " as result p_value[1]
+		}
 		qui capture confirm variable jackknife_SE
 		if _rc == 0 {
 			di as text "Jackknife SE: " as result jackknife_SE[1]
@@ -203,7 +245,7 @@ program define undidjl_stage_three
 		qui capture confirm variable SE
 		if _rc == 0 {
 			drop p_value_RI
-			di as text "Standard Error: " as result SE[1]
+			di as text "Standard error: " as result SE[1]
 			qui local t_val = agg_ATT / SE
 			qui gen p_value = 2*ttail(1, abs(`t_val'))
 			di as text "p-value: " as result p_value[1]
@@ -212,6 +254,13 @@ program define undidjl_stage_three
 			di as text "RI p-value: " as result p_value_RI[1]
 		}
 		
+	}
+	
+	qui capture confirm variable ATT_subset
+	if _rc == 0 {
+		drop ATT_subset
+		drop ATT_subset_se
+		drop ATT_subset_se_jack
 	}
 	
 end 
@@ -225,3 +274,4 @@ end
 *0.1.4 - added p-values and output displays
 *0.2.0 - added weights parameter
 *0.3.0 - added computation of jackknife p -value for common treatment with silos >= 3
+*0.4.0 - added new se's and p-vals
