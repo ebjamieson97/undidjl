@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_three*/
 /*written by Eric Jamieson */
-/*version 0.4.0 2024-11-04 */
+/*version 0.4.1 2024-11-05 */
 /*------------------------------------*/
 version 14.1
 
@@ -123,7 +123,8 @@ program define undidjl_stage_three
 			replace p_value_subset = 2 * ttail(`df', abs(`t_value')) in `i'
 			
 			local t_value_jack = ATT_subset[`i'] / ATT_subset_se_jack[`i']
-			replace p_value_subset_jack = 2 * ttail(`df', abs(`t_value_jack')) in `i'
+			local df_jack = jack_n[`i'] - 1
+			replace p_value_subset_jack = 2 * ttail(`df_jack', abs(`t_value_jack')) in `i'
 			
 		}
 	}
@@ -275,3 +276,4 @@ end
 *0.2.0 - added weights parameter
 *0.3.0 - added computation of jackknife p -value for common treatment with silos >= 3
 *0.4.0 - added new se's and p-vals
+*0.4.1 - made correction to dof
