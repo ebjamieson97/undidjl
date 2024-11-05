@@ -198,8 +198,8 @@ Aggregation: g
 Aggregate ATT: .07432573
 Standard error: .08987133
 p-value: .56009382
-Jackknife SE: .17974266
-Jackknife p-value: .75038135
+Jackknife SE: .08987133
+Jackknife p-value: .56009382
 RI p-value: .5
 ```
 
