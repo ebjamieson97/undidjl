@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_two*/
 /*written by Eric Jamieson */
-/*version 0.1.8 2024-10-23 */
+/*version 0.1.9 2024-11-28 */
 /*------------------------------------*/
 version 14.1
 
@@ -9,8 +9,6 @@ cap program drop undidjl_stage_two
 program define undidjl_stage_two
 
 	syntax , filepath(string) local_silo_name(string) time_column(string) outcome_column(string) local_date_format(string) [consider_covariates(string) view_dataframe(string)]
-	
-	keep `time_column' `outcome_column'
 	
 	// Check for missing values in the time column
     quietly count if missing(`time_column')
@@ -115,3 +113,4 @@ end
 *0.1.6 - add warning for missing values in time or outcome variables
 *0.1.7 - drop superfluous variables
 *0.1.8 - renames (g;t) only if it exists (only for staggered adoption)
+*0.1.9 - removed the line: <keep `time_column' `outcome_column'>
