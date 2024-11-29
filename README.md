@@ -16,8 +16,7 @@ net install undidjl, from("https://raw.githubusercontent.com/ebjamieson97/undidj
 ```
 
 ## Requirements
-* **Julia**: Version > 1.9.4, < 1.11.0  
-   - Please ensure you have a compatible version of Julia installed, as newer versions (e.g., 1.11) may introduce changes that are not yet supported.
+* **Julia**: Version > 1.11.1
 * **Stata**: Version 14.1 or later
 * **David Roodman’s Julia package for Stata**: [julia.ado](https://github.com/droodman/julia.ado)
 
