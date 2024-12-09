@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_init_csv*/
 /*written by Eric Jamieson */
-/*version 0.1.4 2024-09-04 */
+/*version 0.1.5 2024-12-09 */
 /*------------------------------------*/
 version 14.1
 
@@ -81,16 +81,16 @@ program define create_init_csv
 	qui jl: init_df = string.(read_csv_data(filepath))
 	qui jl: st_global("filepath", filepath)	
 	disp as result "init.csv saved to"
-   	disp as result subinstr("$filepath", "\", "/", .)
-	
-	jl use init_df, clear
+	local filepath_cleaned = subinstr("$filepath", "\", "/", .)
+	disp as result "`filepath_cleaned'"
 	
 	qui jl: namesa = []
 	qui jl: start_times = []
 	qui jl: end_times = []
 	qui jl: treatment_times = []
-
 	
+	import delimited "`filepath_cleaned'", varnames(1) clear
+
 end 
 
 /*--------------------------------------*/
@@ -100,3 +100,4 @@ end
 *0.1.2 - pass df to active Stata dataset for easy viewing
 *0.1.3 - changed names variable to namesa to avoid conflict with DataFrames
 *0.1.4 - reset namesa, start_times, end_times, treatment_times at end of function
+*0.1.5 - implement new jl -> .csv -> stata procedure for robustness
