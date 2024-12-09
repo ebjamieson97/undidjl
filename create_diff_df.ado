@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_diff_df*/
 /*written by Eric Jamieson */
-/*version 0.2.1 2024-10-23 */
+/*version 0.2.2 2024-12-09 */
 /*------------------------------------*/
 version 14.1
 
@@ -65,10 +65,10 @@ program define create_diff_df
 	// Return the filepath to Stata
 	qui jl: st_global("filepath", filepath)	
 	disp as result "empty_diff_df.csv saved to"
-   	disp as result subinstr("$filepath", "\", "/", .)
+	local filepath_cleaned = subinstr("$filepath", "\", "/", .)
+   	disp as result "`filepath_cleaned'"
 	
-	jl use empty_diff_df, clear
-
+	import delimited "`filepath_cleaned'", varnames(1) clear
 
 end
 /*--------------------------------------*/
@@ -79,3 +79,4 @@ end
 *0.1.3 - converts and backslashes to forwardslashes for better compatability between Julia and Stata
 *0.2.0 - added option for weights, removed confine_matching
 *0.2.1 - renames (g;t) only if it exists (only for staggered adoption)
+*0.2.2 - added jl -> .csv -> stata procedure for robustness
