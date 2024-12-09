@@ -1,7 +1,7 @@
-/*------------------------------------*/
+  /*------------------------------------*/
 /*undidjl_stage_two*/
 /*written by Eric Jamieson */
-/*version 0.1.9 2024-11-28 */
+/*version 0.1.10 2024-12-09 */
 /*------------------------------------*/
 version 14.1
 
@@ -52,10 +52,14 @@ program define undidjl_stage_two
 	
 	qui jl: st_global("filepath_diff", outputs[1][1])
 	qui jl: st_global("filepath_trends", outputs[2][1])	
+	
 	disp as result "filled_diff_df_$local_silo_name.csv saved to"
-   	disp as result subinstr("$filepath_diff", "\", "/", .)
+   	local filepath_diff_cleaned =  subinstr("$filepath_diff", "\", "/", .)
+	disp as result "`filepath_diff_cleaned'"
+	
 	disp as result "trends_data_$local_silo_name.csv saved to"
-   	disp as result subinstr("$filepath_trends", "\", "/", .)
+	local filepath_trends_cleaned = subinstr("$filepath_trends", "\", "/", .)
+   	disp as result "`filepath_trends_cleaned'"
 	
 	
 	// Parse dataframe(string)
@@ -80,7 +84,7 @@ program define undidjl_stage_two
 					diff_df.diff_var_covariates = parse.(Float64, diff_df.diff_var_covariates); ///
 				end
  
-		jl use diff_df, clear
+		import delimited "`filepath_diff_cleaned'", varnames(1) clear
     }
 	else if "`view_dataframe'" == "trends" {
 		qui jl: trends_df = string.(outputs[2][2])
@@ -91,7 +95,7 @@ program define undidjl_stage_two
 					trends_df.mean_outcome_residualized = parse.(Float64, trends_df.mean_outcome_residualized); ///
 				end
 
-		jl use trends_df, clear
+		import delimited "`filepath_trends_cleaned'", varnames(1) clear
 	}
 	else {
 		di as error "Please indicate which dataframe you'd like to view as the active dataset: 'trends' or 'diff'. Defaults to 'diff' if argument is not specified."
@@ -114,3 +118,4 @@ end
 *0.1.7 - drop superfluous variables
 *0.1.8 - renames (g;t) only if it exists (only for staggered adoption)
 *0.1.9 - removed the line: <keep `time_column' `outcome_column'>
+*0.1.10 - added robustness
