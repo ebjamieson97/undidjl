@@ -1,7 +1,7 @@
   /*------------------------------------*/
 /*undidjl_stage_two*/
 /*written by Eric Jamieson */
-/*version 0.1.10 2024-12-09 */
+/*version 0.1.11 2024-04-27 */
 /*------------------------------------*/
 version 14.1
 
@@ -48,7 +48,7 @@ program define undidjl_stage_two
 	
 	qui jl save df
 	
-	qui jl: outputs = run_stage_two("$filepath", "$local_silo_name", df, "$time_column", "$outcome_column","$local_date_format", consider_covariates = consider_covariates)
+	qui jl: outputs = undid_stage_two("$filepath", "$local_silo_name", df, "$time_column", "$outcome_column","$local_date_format", consider_covariates = consider_covariates)
 	
 	qui jl: st_global("filepath_diff", outputs[1][1])
 	qui jl: st_global("filepath_trends", outputs[2][1])	
@@ -119,3 +119,4 @@ end
 *0.1.8 - renames (g;t) only if it exists (only for staggered adoption)
 *0.1.9 - removed the line: <keep `time_column' `outcome_column'>
 *0.1.10 - added robustness
+*0.1.11 - updated function name in julia from run_ to undid_
