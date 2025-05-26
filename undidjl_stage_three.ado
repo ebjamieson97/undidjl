@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*undidjl_stage_three*/
 /*written by Eric Jamieson */
-/*version 0.6.2 2025-05-24 */
+/*version 0.6.3 2025-05-25 */
 /*------------------------------------*/
 version 14.1
 
@@ -36,6 +36,7 @@ program define undidjl_stage_three, rclass
 
 	// Parse agg 
 	if "`agg'" == "" | "`agg'" == "g"{
+		local agg "g"
 		qui jl: agg = "g"
 	}
 	else if "`agg'" == "gt"{
@@ -66,15 +67,15 @@ program define undidjl_stage_three, rclass
 	}
 	
 	// Parse save_all_csvs
-	if  "`save_csv'" == "" | "`save_csv'" == "TRUE" | "`save_csv'" == "true" | "`save_csv'" == "T" | "`save_csv'" == "True" {
+	if "`save_csv'" == "TRUE" | "`save_csv'" == "true" | "`save_csv'" == "T" | "`save_csv'" == "True" {
 		qui jl: save_all_csvs = true
 		di as result "Saving combined_diff_data.csv to " "`c(pwd)'"
 	}
-	else if "`save_csv'" == "FALSE" | "`save_csv'" == "false" | "`save_csv'" == "F" | "`save_csv'" == "False" {
+	else if "`save_csv'" == "" | "`save_csv'" == "FALSE" | "`save_csv'" == "false" | "`save_csv'" == "F" | "`save_csv'" == "False" {
 		qui jl: save_all_csvs = false
 	}
 	else { 
-		display as error "Error: set save_csv to true or false or omit the argument (defaults to true)"
+		display as error "Error: set save_csv to true or false or omit the argument (defaults to false)"
 	}
 	
 	// Parse interpolation
@@ -120,9 +121,11 @@ program define undidjl_stage_three, rclass
 			continue, break      
 		}
 	}
-	if !`found' {                
+	if `found' == 0 {                
 		local agg "none"
 	}
+	
+	
 	local N = _N
 	if "`agg'" == "silo" {
 		di as text "-----------------------------------------------------------------------------------------------------"
@@ -167,10 +170,7 @@ program define undidjl_stage_three, rclass
         // Store the matrix in r()
         return matrix restab = `table_matrix'
         
-		local linesize = c(linesize)
-		if `linesize' < 103 {
-			di as text "Results table may be squished, try expanding Stata results window."
-		}
+
 		
 	} 
 	else if "`agg'" == "gt" {
@@ -213,10 +213,7 @@ program define undidjl_stage_three, rclass
         // Store the matrix in r()
         return matrix restab = `table_matrix'
 		di as text "Aggregation: " as result "gt"
-		local linesize = c(linesize)
-		if `linesize' < 103 {
-			di as text "Results table may be squished, try expanding Stata results window."
-		}
+
 	} 
 	else if "`agg'" == "g" {
 		di as text "-----------------------------------------------------------------------------------------------------"
@@ -344,3 +341,4 @@ end
 *0.6.0 - added new weighting arg
 *0.6.1 - removed deprecated code for calculating pvals (just doing everything on JL side now)
 *0.6.2 - added agg options of sgt and none
+*0.6.3 - overwrite blank agg option to agg = "g"
