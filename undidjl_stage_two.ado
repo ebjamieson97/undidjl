@@ -1,20 +1,34 @@
-  /*------------------------------------*/
+/*------------------------------------*/
 /*undidjl_stage_two*/
 /*written by Eric Jamieson */
-/*version 0.1.11 2024-04-27 */
+/*version 0.2.0 2025-05-24 */
 /*------------------------------------*/
 version 14.1
 
 cap program drop undidjl_stage_two
 program define undidjl_stage_two
 
-	syntax , filepath(string) local_silo_name(string) time_column(string) outcome_column(string) local_date_format(string) [consider_covariates(string) view_dataframe(string)]
+	syntax , filepath(string) local_silo_name(string) time_column(string) ///
+			 outcome_column(string) local_date_format(string) ///
+		    [consider_covariates(string) view_dataframe(string) /// 
+			anonymize_weights(int 0) anonymize_size(int 5)]
 	
 	// Check for missing values in the time column
     quietly count if missing(`time_column')
     if r(N) > 0 {
         display as error "Error: Missing values found in time variable: `time_column'."
         exit 198
+    }
+
+	if `anonymize_weights' == 0 {
+        qui jl: anonymize_weights = false
+    }
+    else if `anonymize_weights' == 1 {
+        qui jl: anonymize_weights = true
+    }
+    else {
+        di as error "anonymize_weights must be 0 (False) or 1 (True)"
+        exit 5
     }
 
     // Check for missing values in the outcome column
@@ -48,7 +62,9 @@ program define undidjl_stage_two
 	
 	qui jl save df
 	
-	qui jl: outputs = undid_stage_two("$filepath", "$local_silo_name", df, "$time_column", "$outcome_column","$local_date_format", consider_covariates = consider_covariates)
+	qui jl: outputs = undid_stage_two("$filepath", "$local_silo_name", df, "$time_column", "$outcome_column","$local_date_format", ///  
+									  consider_covariates = consider_covariates, anonymize_weights = anonymize_weights,  /// 
+									  anonymize_size = `anonymize_size')
 	
 	qui jl: st_global("filepath_diff", outputs[1][1])
 	qui jl: st_global("filepath_trends", outputs[2][1])	
@@ -120,3 +136,4 @@ end
 *0.1.9 - removed the line: <keep `time_column' `outcome_column'>
 *0.1.10 - added robustness
 *0.1.11 - updated function name in julia from run_ to undid_
+*0.2.0 - added new anonymize_weights and anonymize_size args
