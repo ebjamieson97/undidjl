@@ -1,7 +1,7 @@
 /*------------------------------------*/
 /*create_diff_df*/
 /*written by Eric Jamieson */
-/*version 0.2.3 2024-04-27 */
+/*version 0.2.4 2025-05-24 */
 /*------------------------------------*/
 version 14.1
 
@@ -46,14 +46,14 @@ program define create_diff_df
 	}
 	
 	// Parse weights
-	if "`weights'" == "" | "`weights'" == "standard" | "`weights'" == "Standard" | "`weights'" == "STANDARD" {
-		qui jl: weights = "standard"
+	if "`weights'" == "" {
+		global weights = "att"
 	}
 	else {
-		di as error `"Error: set weights to "standard" or omit argument."'
+		global weights = "`weights'"
 	}
 	
-	qui jl: outputs = create_diff_df("$filepath", "$date_format", "$freq", covariates = covariates, freq_multiplier = freq_multiplier, weights = weights)
+	qui jl: outputs = create_diff_df("$filepath", "$date_format", "$freq", covariates = covariates, freq_multiplier = freq_multiplier, weights = "$weights")
 
 	qui jl: filepath = outputs[1]
 	qui jl: empty_diff_df = string.(outputs[2])
@@ -81,3 +81,4 @@ end
 *0.2.1 - renames (g;t) only if it exists (only for staggered adoption)
 *0.2.2 - added jl -> .csv -> stata procedure for robustness
 *0.2.3 - changed create_diff_df call in julia to account for changed positional/optional args
+*0.2.4 - updated weights arg for new julia version 
